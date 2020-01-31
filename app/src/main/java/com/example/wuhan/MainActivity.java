@@ -23,6 +23,7 @@ import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity {
 
+    //eunno init
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
