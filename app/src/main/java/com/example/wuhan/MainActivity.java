@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     //eunno init
     private AppBarConfiguration mAppBarConfiguration;
-
+    // cutie ming!
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
