@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     //eunno init
     private AppBarConfiguration mAppBarConfiguration;
-    //crawl commit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
