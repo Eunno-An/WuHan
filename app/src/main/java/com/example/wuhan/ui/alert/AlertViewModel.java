@@ -1,18 +1,15 @@
-package com.example.wuhan.ui.map;
+package com.example.wuhan.ui.alert;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class MapViewModel extends ViewModel {
-
+public class AlertViewModel extends ViewModel {
     private MutableLiveData<String> mText;
-
-    public MapViewModel() {
+    public AlertViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is gallery fragment");
     }
-
     public LiveData<String> getText() {
         return mText;
     }

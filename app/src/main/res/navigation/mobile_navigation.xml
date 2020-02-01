@@ -3,17 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_map">
+    app:startDestination="@+id/nav_alert">
 
     <fragment
-        android:id="@+id/nav_map"
-        android:name="com.example.wuhan.ui.notification.NotificationFragment"
-        android:label="@string/menu_map"
-        tools:layout="@layout/fragment_map" />
-
+        android:id="@+id/nav_route"
+        android:name="com.example.wuhan.ui.route.RouteFragment"
+        android:label="@string/menu_route"
+        tools:layout="@layout/fragment_route" />
+    <fragment
+        android:id="@+id/nav_area"
+        android:name="com.example.wuhan.ui.area.AreaFragment"
+        android:label="@string/menu_area"
+        tools:layout="@layout/fragment_area" />
+    <fragment
+        android:id="@+id/nav_alert"
+        android:name="com.example.wuhan.ui.alert.AlertFragment"
+        android:label="@string/menu_alert"
+        tools:layout="@layout/fragment_alert" />
     <fragment
         android:id="@+id/nav_notification"
-        android:name="com.example.wuhan.ui.map.MapFragment"
+        android:name="com.example.wuhan.ui.notification.NotificationFragment"
         android:label="@string/menu_notification"
         tools:layout="@layout/fragment_notification" />
 
