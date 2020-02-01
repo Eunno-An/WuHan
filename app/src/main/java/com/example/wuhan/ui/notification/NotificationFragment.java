@@ -1,4 +1,4 @@
-package com.example.wuhan.ui.slideshow;
+package com.example.wuhan.ui.notification;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.wuhan.R;
 
-public class SlideshowFragment extends Fragment {
+public class NotificationFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private NotificationViewModel notificationViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(this, new Observer<String>() {
+        notificationViewModel =
+                ViewModelProviders.of(this).get(NotificationViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        final TextView textView = root.findViewById(R.id.text_home);
+        notificationViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
