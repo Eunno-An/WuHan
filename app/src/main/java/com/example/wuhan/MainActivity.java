@@ -15,18 +15,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //eunno init
+
     private AppBarConfiguration mAppBarConfiguration;
-    //eunno once again
+    private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -39,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //↓↓↓↓↓↓↓↓↓↓↓↓DB에서 경보 단계 불러오기 시작!↓↓↓↓↓↓↓↓↓↓↓↓
+        //1. DB에서 경보 단계를 불러온다
+        //2. 경보 단계에 따라 다중 조건문으로 ImageView 객체를 수정한다.
+
+        //↑↑↑↑↑↑↑↑↑↑↑↑DB에서 경보 단계 불러오기 끝!↑↑↑↑↑↑↑↑↑↑↑↑
     }
 
     @Override
