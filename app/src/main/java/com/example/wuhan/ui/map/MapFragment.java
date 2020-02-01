@@ -22,14 +22,8 @@ public class MapFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         mapViewModel =
                 ViewModelProviders.of(this).get(MapViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        mapViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_notification, container, false);
+
         return root;
     }
 }
