@@ -40,7 +40,7 @@ public class RouteFragment extends Fragment
     private MapView mapView = null;
 
     //color 저장
-    HashMap<Integer, String> colorMap = new HashMap<Integer, String>();
+    HashMap<Integer, String> colorMap = new HashMap<Integer, String>(); //확진자 식별 번호, 색깔
 
     //경로 저장
     private int totalNum;   //총 확진자 수
