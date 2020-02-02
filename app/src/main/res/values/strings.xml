@@ -10,5 +10,5 @@
     <string name="menu_route">감염자 경로 확인</string>
     <string name="menu_alert">경보 단계 확인</string>
     <string name="menu_notification">실시간 공지사항</string>
-
+    <string name="menu_settings">환경 설정</string>
 </resources>
