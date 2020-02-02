@@ -2,15 +2,17 @@ package com.example.wuhan.db;
 
 public class MapData {
     private String city;
-    private String date;
+    private int date;
+    private int diagNum;
     private String explain;
     private int idx;
     private double latitude;
     private double longitude;
 
+
     public MapData(){}
 
-    public MapData(String city, String date, String explain, int idx, float latitude, float longitude){
+    public MapData(String city, int date, int diagNum, String explain, int idx, float latitude, float longitude){
         this.city = city;
         this.date = date;
         this.explain = explain;
@@ -23,8 +25,12 @@ public class MapData {
         return city;
     }
 
-    public String getDate(){
+    public int getDate(){
         return date;
+    }
+
+    public int getDiagNum(){
+        return diagNum;
     }
 
     public String getExplain(){
