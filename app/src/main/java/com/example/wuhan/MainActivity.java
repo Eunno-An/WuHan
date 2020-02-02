@@ -20,6 +20,7 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
 
 
+    //solchan commit
     private AppBarConfiguration mAppBarConfiguration;
     private ImageView imageView;
     @Override
