@@ -6,13 +6,14 @@ public class ItemObject {
     private String id;
     private String title;
     private String url;
+    private String day;
 
 
-
-    public ItemObject(String id, String title, String url){
+    public ItemObject(String id, String title, String url,String day){
         this.title = title;
         this.url = url;
         this.id = id;
+        this.day = day;
     }
 
 
@@ -26,5 +27,5 @@ public class ItemObject {
     public String getId() {
         return id;
     }
-
+    public String getDay(){ return day;}
 }

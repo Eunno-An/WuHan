@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WuHan</string>
+    <string name="app_name">Kor.ona</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Kor.ona</string>
@@ -12,7 +12,13 @@
     <string name="menu_notification">실시간 공지사항</string>
     <string name="menu_settings">환경 설정</string>
 
+<<<<<<< HEAD
     <string name="admob_app_id">ca-app-pub-9402094076267078~3564601417</string>
     <string name="banner_ad_unit_id">ca-app-pub-9402094076267078/6825189571</string>
     <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
+=======
+    <string name="item_date">"날짜"</string>
+    <string name="item_place">"장소"</string>
+    <string name="item_comment">"내용"</string>
+>>>>>>> e382c6072343618736ea0bb46d53b6ff4d88394f
 </resources>
