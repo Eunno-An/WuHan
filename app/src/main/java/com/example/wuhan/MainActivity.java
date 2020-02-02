@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         //↑↑↑↑↑↑↑↑↑↑↑↑DB에서 경보 단계 불러오기 끝!↑↑↑↑↑↑↑↑↑↑↑↑
     }
-
+//hanjin
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
