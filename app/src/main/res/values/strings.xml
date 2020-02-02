@@ -11,4 +11,8 @@
     <string name="menu_alert">경보 단계 확인</string>
     <string name="menu_notification">실시간 공지사항</string>
     <string name="menu_settings">환경 설정</string>
+
+    <string name="admob_app_id">ca-app-pub-9402094076267078~3564601417</string>
+    <string name="banner_ad_unit_id">ca-app-pub-9402094076267078/6825189571</string>
+    <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
