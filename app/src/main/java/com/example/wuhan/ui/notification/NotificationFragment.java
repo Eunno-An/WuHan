@@ -46,9 +46,6 @@ public class NotificationFragment extends Fragment {
 
         //AsyncTask 작동시킴(파싱)
         new Description().execute();
-
-
-
         return root;
     }
 
