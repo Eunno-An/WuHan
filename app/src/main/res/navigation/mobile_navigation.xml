@@ -27,8 +27,8 @@
         tools:layout="@layout/fragment_notification" />
     <fragment
         android:id="@+id/nav_setting"
-        android:name="com.example.wuhan.ui.route.RouteFragment"
+        android:name="com.example.wuhan.ui.setting.SettingFragment"
         android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_route" />
+        tools:layout="@layout/fragment_setting" />
 
 </navigation>
