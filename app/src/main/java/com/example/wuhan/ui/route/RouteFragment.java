@@ -109,7 +109,7 @@ public class RouteFragment extends Fragment
          */
 
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
-
+        //함수를 통해서 얻어온다.
         /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(CENTER));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(7));
