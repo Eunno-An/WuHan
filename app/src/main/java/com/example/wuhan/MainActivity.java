@@ -1,7 +1,9 @@
 package com.example.wuhan;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //nav_route nav_notificationnav_areanav_alert
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -79,4 +83,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }

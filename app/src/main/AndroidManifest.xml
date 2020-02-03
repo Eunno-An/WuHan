@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wuhan">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="ca-app-pub-9402094076267078~3564601417"/>
-
+        android:value="ca-app-pub-9402094076267078~3564601417" />
 
     <application
         android:allowBackup="true"
@@ -18,12 +18,10 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true"/>
-
-
+            android:value="true" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCwm_BURh9NCTvMjWGeQ4bslu1xKaAL4b0"/>
+            android:value="AIzaSyCwm_BURh9NCTvMjWGeQ4bslu1xKaAL4b0" />
 
         <activity
             android:name=".MainActivity"

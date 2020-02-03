@@ -19,7 +19,6 @@ public class SettingFragment extends Fragment {
                 ViewModelProviders.of(this).get(SettingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_setting, contatiner,false);
 
-
         return root;
     }
 }
