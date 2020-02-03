@@ -1,5 +1,6 @@
 package com.example.wuhan.ui.alert;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.wuhan.R;
 import com.example.wuhan.db.Patient;
 import com.google.firebase.database.DataSnapshot;
@@ -28,20 +30,13 @@ public class AlertFragment extends Fragment {
 
     //데이터베이스에서 읽어올 정보들!
     private Patient patient;
-
+    private LottieAnimationView levelAnimationView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup contatiner, Bundle savedInstanceState){
         alertViewModel =
                 ViewModelProviders.of(this).get(AlertViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_alert, contatiner,false);
-
-
-        return root;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+        final View root = inflater.inflate(R.layout.fragment_alert, contatiner,false);
         super.onCreate(savedInstanceState);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,7 +49,20 @@ public class AlertFragment extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 patient = dataSnapshot.getValue(Patient.class);
-                Log.d("firebase - 확진자수 읽기", patient.getDiagnosis() + "");
+
+                String level = patient.getLevel();
+                levelAnimationView = (LottieAnimationView) root.findViewById(R.id.animation_view);
+                if(level.equals("관심")){
+                    levelAnimationView.setAnimation(R.raw.alert_blue);
+                }else if(level.equals("주의")){
+                    levelAnimationView.setAnimation(R.raw.alert_yellow);
+                }
+                else if(level.equals("경계")){
+                    levelAnimationView.setAnimation(R.raw.alert_orange);
+                }
+                else if(level.equals("심각")){
+                    levelAnimationView.setAnimation(R.raw.alert_red);
+                }
             }
 
             @Override
@@ -63,5 +71,10 @@ public class AlertFragment extends Fragment {
                 Log.w("firebase - 확진자수 읽기 에러", "Failed to read value.", error.toException());
             }
         });
+
+
+        return root;
     }
+
+
 }

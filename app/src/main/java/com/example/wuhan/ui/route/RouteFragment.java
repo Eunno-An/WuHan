@@ -60,10 +60,8 @@ public class RouteFragment extends Fragment
         routeViewModel =
                 ViewModelProviders.of(this).get(RouteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
-
         mapView = (MapView)root.findViewById(R.id.map);
         mapView.getMapAsync(this);
-
         return root;
     }
     @Override
