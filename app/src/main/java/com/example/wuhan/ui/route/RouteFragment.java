@@ -43,15 +43,15 @@ public class RouteFragment extends Fragment
 
     private MapView mapView = null;
 
-    //color 저장
-    HashMap<Integer, String> colorMap = new HashMap<Integer, String>(); //확진자 식별 번호, 색깔
-
-    //경로 저장
     private int totalNum;   //총 확진자 수
-    ArrayList<MapData> pathList = new ArrayList<>();
     private final int diagnosisCapacity = 100;
 
-    ArrayList<LatLngWithIdx>[] gpsData = new ArrayList[diagnosisCapacity];     //확진자 별 경로, gpsData[1]은 1번 확진자의 경로
+    //color 저장
+    int colorMap[] = new int[diagnosisCapacity]; //몇번째 확진자인지를 index로
+
+    //경로 저장
+    private ArrayList<MapData>[] pathList = new ArrayList[diagnosisCapacity];       //확진자별 정보
+    private ArrayList<LatLngWithIdx>[] gpsData = new ArrayList[diagnosisCapacity];     //확진자 별 경로, gpsData[1]은 1번 확진자의 경로
 
     public RouteFragment(){
 
@@ -76,6 +76,7 @@ public class RouteFragment extends Fragment
         //여기부터 디비 추가!!!!
         for(int i = 0; i < diagnosisCapacity; i++){
             gpsData[i] = new ArrayList<>();
+            pathList[i] = new ArrayList<>();
         }
 
 
@@ -107,14 +108,14 @@ public class RouteFragment extends Fragment
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ColorData colorData = dataSnapshot.getValue(ColorData.class);
-                colorMap.put(Integer.valueOf(colorData.getIdx()), colorData.getColor());
+                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
                 Log.d("firebase-color added", colorData.getColor() + "");
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 ColorData colorData = dataSnapshot.getValue(ColorData.class);
-                colorMap.put(Integer.valueOf(colorData.getIdx()), colorData.getColor());
+                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
                 Log.d("firebase-color changed", colorData.getColor() + "");
             }
 
@@ -136,7 +137,7 @@ public class RouteFragment extends Fragment
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 MapData mapData = dataSnapshot.getValue(MapData.class);
-                pathList.add(mapData);
+                pathList[mapData.getDiagNum()].add(mapData);
                 gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
                 Log.d("firebase-path added", mapData.getIdx() + "");
             }
@@ -144,7 +145,7 @@ public class RouteFragment extends Fragment
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 MapData mapData = dataSnapshot.getValue(MapData.class);
-                pathList.add(mapData);
+                pathList[mapData.getDiagNum()].add(mapData);
                 gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
                 Log.d("firebase-path changed", mapData.getIdx() + "");
             }

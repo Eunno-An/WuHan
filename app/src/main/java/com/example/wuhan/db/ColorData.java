@@ -2,11 +2,11 @@ package com.example.wuhan.db;
 
 public class ColorData {
     private int idx;    //확진자 번호
-    private String color;  //색
+    private int color;  //색
 
     public ColorData(){}
 
-    public ColorData(int idx, String color){
+    public ColorData(int idx, int color){
         this.idx = idx;
         this.color = color;
     }
@@ -15,7 +15,7 @@ public class ColorData {
         return idx;
     }
 
-    public String getColor(){
+    public int getColor(){
         return color;
     }
 }
