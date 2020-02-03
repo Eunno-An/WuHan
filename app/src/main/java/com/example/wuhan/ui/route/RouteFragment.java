@@ -227,10 +227,22 @@ public class RouteFragment extends Fragment
 //        googleMap.addMarker(markerOptions0);
         for(int i=1; i<=totalNum; i++){
             MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title("첫번째 확진자");
+            //color 불러오기
+            int color = colorMap[i];
             for(int j=0; j<gpsData[i].size(); j++){
+                //gpsData 배열로부터 위도, 경도 정보 불러오기
                 LatLng position = gpsData[i].get(j).latlng;
-                Log.e("position", position + "");
+                //경로 마다 comment 불러오기
+                String comment = pathList[i].get(j).getExplain();
+                //i번째 확진자에 대한 title 지정하기
+                markerOptions.title(i + "번째 확진자");
+                //i번째 확진자에 대한 snippet 지정하기
+                markerOptions.snippet(comment);
+                //i번째 확진자에 대한 position 지정하기
+                markerOptions.position(position);
+                //i번째 확진자에 대한 색 지정하기
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
+                googleMap.addMarker(markerOptions);
             }
         }
         /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
