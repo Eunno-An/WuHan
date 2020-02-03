@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     >
 
     <ImageView
@@ -173,4 +173,8 @@
         app:layout_constraintTop_toTopOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.904" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

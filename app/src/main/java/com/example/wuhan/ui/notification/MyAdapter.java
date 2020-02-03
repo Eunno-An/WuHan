@@ -21,14 +21,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ArrayList<ItemObject> mList;
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView_title,textView_id;
+        private TextView textView_title,textView_id, textView_day;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-
             textView_title = (TextView) itemView.findViewById(R.id.text);
             textView_id = (TextView) itemView.findViewById(R.id.id);
+            textView_day = (TextView) itemView.findViewById(R.id.day);
         }
     }
 
@@ -49,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         holder.textView_title.setText(String.valueOf(mList.get(position).getTitle()));
         holder.textView_id.setText(String.valueOf(mList.get(position).getId()));
-
+        holder.textView_day.setText(String.valueOf(mList.get(position).getDay()));
         holder.textView_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
