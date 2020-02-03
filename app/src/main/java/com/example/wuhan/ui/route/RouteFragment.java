@@ -243,7 +243,7 @@ public class RouteFragment extends Fragment
                 //경로 마다 comment 불러오기
                 String comment = pathList[i].get(j).getExplain();
                 //i번째 확진자에 대한 title 지정하기
-                markerOptions.title(i + "번째 확진자");
+                markerOptions.title(i + "번째 확진자" + (j+1));
                 //i번째 확진자에 대한 snippet 지정하기
                 markerOptions.snippet(comment);
                 //i번째 확진자에 대한 position 지정하기
