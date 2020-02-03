@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.wuhan.R;
 import com.example.wuhan.db.Patient;
@@ -49,7 +50,6 @@ public class AlertFragment extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 patient = dataSnapshot.getValue(Patient.class);
-
                 String level = patient.getLevel();
                 levelAnimationView = (LottieAnimationView) root.findViewById(R.id.animation_view);
                 alertTextView = (TextView)root.findViewById(R.id.main_text);
