@@ -1,5 +1,8 @@
 package com.example.wuhan.ui.route;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
@@ -49,7 +53,6 @@ public class RouteFragment extends Fragment
     private ArrayList<MapData>[] pathList = new ArrayList[diagnosisCapacity];       //확진자별 정보
     private ArrayList<LatLngWithIdx>[] gpsData = new ArrayList[diagnosisCapacity];     //확진자 별 경로, gpsData[1]은 1번 확진자의 경로
 
-
     public RouteFragment(){
 
     }
@@ -62,6 +65,8 @@ public class RouteFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
         mapView = (MapView)root.findViewById(R.id.map);
         mapView.getMapAsync(this);
+
+
         return root;
     }
     @Override
@@ -85,7 +90,8 @@ public class RouteFragment extends Fragment
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 totalNum = ((Long) dataSnapshot.getValue()).intValue();
-                Log.d("firebase - 확진자수 읽기", totalNum + "");
+                Log.d("ming", "ming");
+                Log.d("firebase totalNum", totalNum + "");
             }
 
             @Override
@@ -210,16 +216,23 @@ public class RouteFragment extends Fragment
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng CENTER = new LatLng(36.675801, 127.990564);
-        /*마커 옵션 수정하는 부분
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(SEOUL);
-//        markerOptions.title("서울");
-//        markerOptions.snippet("수도");
-//        googleMap.addMarker(markerOptions);
-         */
-
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
         //함수를 통해서 얻어온다.
+//        LatLng INCHEON_INHAUNIV_HIGHTECH = new LatLng(37.450686, 126.657126);
+//        MarkerOptions markerOptions0 = new MarkerOptions();
+//        markerOptions0.position(INCHEON_INHAUNIV_HIGHTECH);
+//        markerOptions0.title("인하대학교 하이테크센터");
+//        markerOptions0.snippet("밑에 정보");
+//        markerOptions0.icon(BitmapDescriptorFactory.defaultMarker(0));
+//        googleMap.addMarker(markerOptions0);
+        for(int i=1; i<=totalNum; i++){
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.title("첫번째 확진자");
+            for(int j=0; j<gpsData[i].size(); j++){
+                LatLng position = gpsData[i].get(j).latlng;
+                Log.e("position", position + "");
+            }
+        }
         /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(CENTER));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(7));
