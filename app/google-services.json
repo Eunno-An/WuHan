@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "316515366256",
+    "firebase_url": "https://wuhan-inhauniv.firebaseio.com",
+    "project_id": "wuhan-inhauniv",
+    "storage_bucket": "wuhan-inhauniv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316515366256:android:def2196047e3f738780bb5",
+        "android_client_info": {
+          "package_name": "com.example.wuhan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316515366256-vg8a4ki3v4nvvo23t5ui48sv835ivco2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn0gf433je8m4qJwY-T5GVFJpDzOGnJY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316515366256-vg8a4ki3v4nvvo23t5ui48sv835ivco2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
