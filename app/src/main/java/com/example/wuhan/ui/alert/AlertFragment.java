@@ -31,7 +31,7 @@ public class AlertFragment extends Fragment {
     //데이터베이스에서 읽어올 정보들!
     private Patient patient;
     private LottieAnimationView levelAnimationView;
-
+    private TextView alertTextView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup contatiner, Bundle savedInstanceState){
         alertViewModel =
@@ -52,16 +52,25 @@ public class AlertFragment extends Fragment {
 
                 String level = patient.getLevel();
                 levelAnimationView = (LottieAnimationView) root.findViewById(R.id.animation_view);
+                alertTextView = (TextView)root.findViewById(R.id.main_text);
                 if(level.equals("관심")){
                     levelAnimationView.setAnimation(R.raw.alert_blue);
+                    alertTextView.setText("관심");
+                    alertTextView.setTextColor(getResources().getColor(R.color.colorBlue));
                 }else if(level.equals("주의")){
                     levelAnimationView.setAnimation(R.raw.alert_yellow);
+                    alertTextView.setText("주의");
+                    alertTextView.setTextColor(getResources().getColor(R.color.colorYellow));
                 }
                 else if(level.equals("경계")){
                     levelAnimationView.setAnimation(R.raw.alert_orange);
+                    alertTextView.setText("경계");
+                    alertTextView.setTextColor(getResources().getColor(R.color.colorOrange));
                 }
                 else if(level.equals("심각")){
                     levelAnimationView.setAnimation(R.raw.alert_red);
+                    alertTextView.setText("심각");
+                    alertTextView.setTextColor(getResources().getColor(R.color.colorRed));
                 }
             }
 

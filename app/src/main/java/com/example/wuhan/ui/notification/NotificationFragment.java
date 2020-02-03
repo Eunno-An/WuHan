@@ -86,7 +86,12 @@ public class NotificationFragment extends Fragment {
                         String url = "http://www.mohw.go.kr" + elem.select("a[class = txt_title]").attr("href");
                         String day = elem.text();
                         int twotwo = day.indexOf("2020-");
-                        day = day.substring(twotwo, twotwo + 10);
+                        if(twotwo == -1){
+                            day = "";
+                        }
+                        else {
+                            day = day.substring(twotwo, twotwo + 10);
+                        }
                         //title: $(this).find('a.txt_title').text(),
                         // url: "http://www.mohw.go.kr"+ $(this).find('a.txt_title').attr('href'),
                         //id: $(this).find('td.m_dp_n').text().slice(0,5),
