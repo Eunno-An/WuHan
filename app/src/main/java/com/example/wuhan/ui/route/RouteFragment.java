@@ -21,6 +21,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,8 +35,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RouteFragment extends Fragment
@@ -178,6 +182,7 @@ public class RouteFragment extends Fragment
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -225,8 +230,11 @@ public class RouteFragment extends Fragment
 //        markerOptions0.snippet("밑에 정보");
 //        markerOptions0.icon(BitmapDescriptorFactory.defaultMarker(0));
 //        googleMap.addMarker(markerOptions0);
+
         for(int i=1; i<=totalNum; i++){
             MarkerOptions markerOptions = new MarkerOptions();
+            PolylineOptions polylineOptions;
+            List<LatLng> arrayPoints = new ArrayList<>();
             //color 불러오기
             int color = colorMap[i];
             for(int j=0; j<gpsData[i].size(); j++){
@@ -243,6 +251,14 @@ public class RouteFragment extends Fragment
                 //i번째 확진자에 대한 색 지정하기
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
                 googleMap.addMarker(markerOptions);
+
+                polylineOptions = new PolylineOptions();
+                polylineOptions.width(7);
+                arrayPoints.add(position);
+                polylineOptions.addAll(arrayPoints);
+                googleMap.addPolyline(polylineOptions);
+
+
             }
         }
         /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
