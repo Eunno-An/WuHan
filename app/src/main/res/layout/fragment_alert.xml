@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.196"
         app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/alert_red" />
+         />
 
     <TextView
         android:id="@+id/info_text"
@@ -83,7 +83,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="경계"
         android:textColor="#C70909"
         android:textSize="45dp"
         android:textStyle="bold"
