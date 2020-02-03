@@ -26,6 +26,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 public class AlertFragment extends Fragment {
     private AlertViewModel alertViewModel;
 
@@ -33,6 +35,12 @@ public class AlertFragment extends Fragment {
     private Patient patient;
     private LottieAnimationView levelAnimationView;
     private TextView alertTextView;
+
+    private TextView deathTextView; //사망자 수
+    private TextView ingTextView; // 검사중 수
+    private TextView outTextView;  // 격리해제 수
+    private TextView confirmTextView; // 확진자 수
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup contatiner, Bundle savedInstanceState){
         alertViewModel =
@@ -72,6 +80,17 @@ public class AlertFragment extends Fragment {
                     alertTextView.setText("심각");
                     alertTextView.setTextColor(getResources().getColor(R.color.colorRed));
                 }
+
+                deathTextView = (TextView)root.findViewById(R.id.death_num);
+                ingTextView = (TextView)root.findViewById(R.id.ing_num);
+                confirmTextView = (TextView)root.findViewById(R.id.confirm_num);
+                outTextView = (TextView)root.findViewById(R.id.out_num);
+
+                deathTextView.setText(Integer.toString(patient.getFatality()));//getFatality는 int
+                ingTextView.setText(Integer.toString(patient.getIng()));
+                outTextView.setText(Integer.toString(patient.getOut()));
+                confirmTextView.setText(Integer.toString(patient.getDiagnosis()));
+
             }
 
             @Override
