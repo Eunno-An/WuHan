@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WuHan</string>
+    <string name="app_name">Kor.ona</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Kor.ona</string>
@@ -11,10 +11,10 @@
     <string name="menu_alert">경보 단계 확인</string>
     <string name="menu_notification">실시간 공지사항</string>
     <string name="menu_settings">환경 설정</string>
+    <string name="menu_feedback">Feedback</string>
 
     <string name="default_notification_channel_id">Channel ID</string>
     <string name="default_notification_channel_name" translatable="true">Test</string>
-
 
 
     <string name="admob_app_id">ca-app-pub-9402094076267078~3564601417</string>
@@ -24,5 +24,8 @@
     <string name="item_date">"날짜"</string>
     <string name="item_place">"장소"</string>
     <string name="item_comment">"내용"</string>
+
+    <string name="pref_key_route">route_alarm</string>
+    <string name="pref_key_diagnose">diagnose_alarm</string>
 
 </resources>

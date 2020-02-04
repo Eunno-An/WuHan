@@ -1,9 +1,11 @@
 package com.example.wuhan.ui.area;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wuhan.R;
+import com.example.wuhan.db.MapData;
+import com.example.wuhan.ui.route.RouteFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -31,7 +41,9 @@ public class AreaFragment extends Fragment {
     private ArrayList<ItemObject2> list10 = new ArrayList(); //제주
     private ArrayList<ItemObject2> list11 = new ArrayList(); //부산, 울산
     private AreaViewModel mapViewModel;
-    private TextView gyeong_In,  seoul, kangwon, chung_nam,chung_buk, gyeong_buk, gyeong_nam, jun_nam, jun_buk, jeju, busan_ulsan;
+    private Button gyeong_In,  seoul, kangwon, chung_nam,chung_buk, gyeong_buk, gyeong_nam, jun_nam, jun_buk, jeju, busan_ulsan;
+    private RouteFragment routeFragment;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         mapViewModel =
@@ -44,7 +56,7 @@ public class AreaFragment extends Fragment {
         final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
         //텍스트 뷰 객체 참조
 
-
+        routeFragment = new RouteFragment();
         RecyclerView recyclerView2 = dialog.findViewById(R.id.recycler2);
         TextView dialogText = dialog.findViewById(R.id.dialogtext1);
 
@@ -52,13 +64,89 @@ public class AreaFragment extends Fragment {
         dialogText.setText("1");
 
         //리사이클러뷰 아이템 추가 코드
-        list2.add(new ItemObject2("날짜", "장소", "내용"));
-        list2.add(new ItemObject2("1/29", "서울","우미관에서 식사"));
 
-        list.add(new ItemObject2("날짜", "장소", "내용"));
-        list.add(new ItemObject2("1/29", "인천","인천에서 산책"));
+        //db연동
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mapRef = database.getReference("map");
+        mapRef.orderByChild("date");
+        mapRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.d("firebase", "onChildAdded:" + dataSnapshot.getKey());
+
+                MapData tmp = dataSnapshot.getValue(MapData.class);
+                String date = Integer.valueOf(tmp.getDate()).toString().substring(4,6) + "/" + Integer.valueOf(tmp.getDate()).toString().substring(6);
+                ItemObject2 item = new ItemObject2(date, tmp.getCity(), tmp.getExplain());
+                if(tmp.getCity().equals("경기/인천")){
+                    list.add(item);
+                }
+                else if(tmp.getCity().equals("서울")){
+                    list2.add(item);
+                }
+                else if(tmp.getCity().equals("강원")){
+                    list3.add(item);
+                }
+                else if(tmp.getCity().equals("충남")){
+                    list4.add(item);
+                }
+                else if(tmp.getCity().equals("충북")){
+                    list5.add(item);
+                }
+                else if(tmp.getCity().equals("경북")){
+                    list6.add(item);
+                }
+                else if(tmp.getCity().equals("경남")){
+                    list7.add(item);
+                }
+                else if(tmp.getCity().equals("전남")){
+                    list8.add(item);
+                }
+                else if(tmp.getCity().equals("전북")){
+                    list9.add(item);
+                }
+                else if(tmp.getCity().equals("제주")){
+                    list10.add(item);
+                }
+                else if(tmp.getCity().equals("부산/울산")){
+                    list11.add(item);
+                }
+                gyeong_In.setText(Integer.toString(list.size()));
+                seoul.setText(Integer.toString(list2.size()));
+                kangwon.setText(Integer.toString(list3.size()));
+                chung_nam.setText(Integer.toString(list4.size()));
+                chung_buk.setText(Integer.toString(list5.size()));
+                gyeong_buk.setText(Integer.toString(list6.size()));
+                gyeong_nam.setText(Integer.toString(list7.size()));
+                jun_nam.setText(Integer.toString(list8.size()));
+                jun_buk.setText(Integer.toString(list9.size()));
+                jeju.setText(Integer.toString(list10.size()));
+                busan_ulsan.setText(Integer.toString(list11.size()));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("firebase", "error to load", databaseError.toException());
+
+            }
+        });
+
         //경인 버튼 추가
-        gyeong_In = (TextView)root.findViewById(R.id.Gyeng_In);
+        gyeong_In = (Button)root.findViewById(R.id.gyeongInBtn);
         gyeong_In.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +168,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        seoul = (TextView)root.findViewById(R.id.Seoul);
+        seoul = (Button)root.findViewById(R.id.seoulBtn);
         seoul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +189,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        kangwon = (TextView)root.findViewById(R.id.Gangwon);
+        kangwon = (Button)root.findViewById(R.id.gangwon_Btn);
         kangwon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +210,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        chung_nam = (TextView)root.findViewById(R.id.Chung_Nam);
+        chung_nam = (Button)root.findViewById(R.id.chung_nam_Btn);
         chung_nam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +231,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        chung_buk = (TextView)root.findViewById(R.id.Chung_Buck);
+        chung_buk = (Button)root.findViewById(R.id.chung_buck_Btn);
         chung_buk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +252,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        gyeong_buk = (TextView)root.findViewById(R.id.Gyeong_buck);
+        gyeong_buk = (Button)root.findViewById(R.id.gyeong_buck_Btn);
         gyeong_buk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,7 +273,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        gyeong_nam = (TextView)root.findViewById(R.id.Gyeong_Nam);
+        gyeong_nam = (Button)root.findViewById(R.id.gyeong_nam_Btn);
         gyeong_nam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,7 +294,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        jun_buk = (TextView)root.findViewById(R.id.Jeon_Buck);
+        jun_buk = (Button)root.findViewById(R.id.jeon_buk_Btn);
         jun_buk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +315,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        jun_nam = (TextView)root.findViewById(R.id.Jeon_Nam);
+        jun_nam = (Button)root.findViewById(R.id.jeon_nam_Btn);
         jun_nam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,7 +336,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        jeju = (TextView)root.findViewById(R.id.Jeju);
+        jeju = (Button)root.findViewById(R.id.jeju_Btn);
         jeju.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,7 +357,7 @@ public class AreaFragment extends Fragment {
             }
         });
 
-        busan_ulsan = (TextView)root.findViewById(R.id.Busan_Ulsan);
+        busan_ulsan = (Button)root.findViewById(R.id.busan_ulsan_Btn);
         busan_ulsan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

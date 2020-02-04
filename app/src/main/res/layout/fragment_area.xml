@@ -174,7 +174,121 @@
         app:layout_constraintVertical_bias="0.904" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id = "@+id/recyclerview"
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-42dp" />
+
+    <Button
+        android:id="@+id/gyeongInBtn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="220dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Gyeng_In" />
+
+    <Button
+        android:id="@+id/seoulBtn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="172dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Seoul" />
+
+    <Button
+        android:id="@+id/gangwon_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="84dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Gangwon" />
+
+    <Button
+        android:id="@+id/chung_nam_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="220dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Chung_Nam" />
+
+    <Button
+        android:id="@+id/chung_buck_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="132dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Chung_Buck" />
+
+    <Button
+        android:id="@+id/gyeong_buck_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Gyeong_buck" />
+
+    <Button
+        android:id="@+id/jeon_buk_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="184dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Jeon_Buck" />
+
+    <Button
+        android:id="@+id/gyeong_nam_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="96dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Gyeong_Nam" />
+
+    <Button
+        android:id="@+id/busan_ulsan_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Busan_Ulsan" />
+
+    <Button
+        android:id="@+id/jeon_nam_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="184dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/Jeon_Nam" />
+
+    <Button
+        android:id="@+id/jeju_Btn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/custom_button"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/Jeju" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="숫자를 누르면 더 자세한 정보를 볼 수 있습니다."
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.571" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

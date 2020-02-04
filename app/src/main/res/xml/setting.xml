@@ -1,34 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:key="@string/pref_key_diagnose"
+        app:title="확진자 수 알림"
+        app:icon="@drawable/ic_setting_alert"
+        app:summary="확진자 수가 증가하거나 감소할 시 푸시알람을 받습니다"/>
 
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="diagnose_alarm"
-            android:title="확진자 수 알림"
-            android:summary="확진자 수가 증가하거나 감소할 시 푸시알람을 받습니다"/>
-
-       <SwitchPreference
-           android:defaultValue="false"
-          android:key="route_alarm"
-          android:title="확진자 경로 알림"
-         android:summary="확진자 경로가 업데이트 될 때마다 푸시알람을 받습니다"/>
-
-
-        <SwitchPreference
-                android:defaultValue="false"
-                android:key="notification_alarm"
-                android:summary="보건복지부에서 신종 코로나 바이러스 관련 공지사항이 업데이트 될 시 푸시알람을 받습니다"
-                android:title="공지사항 업데이트 알림"/>
-
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="myarea_alarm"
-            android:summary="내 지역의 확진자 현황이 바뀔 때마다 푸시 알람을 받습니다."
-            android:title="내 지역 알림"/>
-
-
-
-
-</PreferenceScreen>
+    <SwitchPreferenceCompat
+        app:icon="@drawable/ic_setting_map"
+        app:defaultValue="false"
+        app:key="@string/pref_key_route"
+        app:title="확진자 경로 알림"
+        app:summary="확진자 경로가 업데이트 될 때마다 푸시알람을 받습니다"/>
+</androidx.preference.PreferenceScreen>
