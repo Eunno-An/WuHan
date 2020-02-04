@@ -82,10 +82,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String token) {
+        /*
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("users");
         ref.child(token).setValue(0);
         Log.d("firebase - token", token);
+        */
     }
 
 
