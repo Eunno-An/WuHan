@@ -16,7 +16,6 @@
     <string name="default_notification_channel_name" translatable="true">Test</string>
 
 
-
     <string name="admob_app_id">ca-app-pub-9402094076267078~3564601417</string>
     <string name="banner_ad_unit_id">ca-app-pub-9402094076267078/6825189571</string>
     <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
