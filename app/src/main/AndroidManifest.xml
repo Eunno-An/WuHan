@@ -18,6 +18,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".Intro_activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="console.firebase.google.com"
+                    android:scheme="https" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
@@ -36,26 +61,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCwm_BURh9NCTvMjWGeQ4bslu1xKaAL4b0" />
 
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="console.firebase.google.com"
-                    android:scheme="https" />
-            </intent-filter>
-        </activity>
 
         <service android:name=".MyFirebaseInstanceIdService">
             <intent-filter>

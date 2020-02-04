@@ -2,6 +2,7 @@ package com.example.wuhan.ui.route;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,6 +58,11 @@ public class RouteFragment extends Fragment
     private ArrayList<MapData>[] pathList = new ArrayList[diagnosisCapacity];       //확진자별 정보
     private ArrayList<LatLngWithIdx>[] gpsData = new ArrayList[diagnosisCapacity];     //확진자 별 경로, gpsData[1]은 1번 확진자의 경로
 
+    //색 지정
+    float hue;
+    float saturation = 13;
+    float brightness = 14;
+    float[] HSV = new float[3];
     public RouteFragment(){
 
     }
@@ -221,6 +227,7 @@ public class RouteFragment extends Fragment
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng CENTER = new LatLng(36.675801, 127.990564);
+
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
         //함수를 통해서 얻어온다.
 //        LatLng INCHEON_INHAUNIV_HIGHTECH = new LatLng(37.450686, 126.657126);
@@ -237,6 +244,13 @@ public class RouteFragment extends Fragment
             List<LatLng> arrayPoints = new ArrayList<>();
             //color 불러오기
             int color = colorMap[i];
+            HSV[0] = color;
+            HSV[1] = saturation;
+            HSV[2] = brightness;
+            int rgb = Color.HSVToColor(HSV);
+            int red = (rgb >> 16) & 0xFF;
+            int green = (rgb >> 8) & 0xFF;
+            int blue = rgb & 0xFF;
             for(int j=0; j<gpsData[i].size(); j++){
                 //gpsData 배열로부터 위도, 경도 정보 불러오기
                 LatLng position = gpsData[i].get(j).latlng;
@@ -255,6 +269,7 @@ public class RouteFragment extends Fragment
                 polylineOptions = new PolylineOptions();
                 polylineOptions.width(7);
                 arrayPoints.add(position);
+                polylineOptions.color(rgb);
                 polylineOptions.addAll(arrayPoints);
                 googleMap.addPolyline(polylineOptions);
 
