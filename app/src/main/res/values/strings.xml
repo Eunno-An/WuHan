@@ -24,4 +24,6 @@
     <string name="item_place">"장소"</string>
     <string name="item_comment">"내용"</string>
 
+    <string name="pref_key_route">route_alarm</string>
+    <string name="pref_key_diagnose">diagnose_alarm</string>
 </resources>
