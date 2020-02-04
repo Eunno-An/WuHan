@@ -21,7 +21,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
+   
     public MyFirebaseMessagingService(){}
 
 
@@ -59,7 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void scheduleJob() {
     }
     private void handleNow(){
-
+        
     }
 
 
