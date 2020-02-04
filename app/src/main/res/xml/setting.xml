@@ -1,0 +1,15 @@
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:key="diagnose_alarm"
+        app:title="확진자 수 알림"
+        app:icon="@drawable/ic_setting_alert"
+        app:summary="확진자 수가 증가하거나 감소할 시 푸시알람을 받습니다"/>
+    <SwitchPreferenceCompat
+        app:icon="@drawable/ic_setting_map"
+        app:defaultValue="false"
+        app:key="route_alarm"
+        app:title="확진자 경로 알림"
+        app:summary="확진자 경로가 업데이트 될 때마다 푸시알람을 받습니다"/>
+</androidx.preference.PreferenceScreen>

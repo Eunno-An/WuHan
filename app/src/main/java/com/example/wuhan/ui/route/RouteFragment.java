@@ -1,5 +1,8 @@
 package com.example.wuhan.ui.route;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +18,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,8 +35,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RouteFragment extends Fragment
@@ -39,16 +47,15 @@ public class RouteFragment extends Fragment
 
     private MapView mapView = null;
 
-    //color 저장
-    HashMap<Integer, String> colorMap = new HashMap<Integer, String>(); //확진자 식별 번호, 색깔
-
-    //경로 저장
     private int totalNum;   //총 확진자 수
-    ArrayList<MapData> pathList = new ArrayList<>();
     private final int diagnosisCapacity = 100;
 
-    ArrayList<LatLngWithIdx>[] gpsData = new ArrayList[diagnosisCapacity];     //확진자 별 경로, gpsData[1]은 1번 확진자의 경로
+    //color 저장
+    int colorMap[] = new int[diagnosisCapacity]; //몇번째 확진자인지를 index로
 
+    //경로 저장
+    private ArrayList<MapData>[] pathList = new ArrayList[diagnosisCapacity];       //확진자별 정보
+    private ArrayList<LatLngWithIdx>[] gpsData = new ArrayList[diagnosisCapacity];     //확진자 별 경로, gpsData[1]은 1번 확진자의 경로
 
     public RouteFragment(){
 
@@ -62,6 +69,8 @@ public class RouteFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
         mapView = (MapView)root.findViewById(R.id.map);
         mapView.getMapAsync(this);
+
+
         return root;
     }
     @Override
@@ -71,6 +80,7 @@ public class RouteFragment extends Fragment
         //여기부터 디비 추가!!!!
         for(int i = 0; i < diagnosisCapacity; i++){
             gpsData[i] = new ArrayList<>();
+            pathList[i] = new ArrayList<>();
         }
 
 
@@ -84,7 +94,8 @@ public class RouteFragment extends Fragment
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 totalNum = ((Long) dataSnapshot.getValue()).intValue();
-                Log.d("firebase - 확진자수 읽기", totalNum + "");
+                Log.d("ming", "ming");
+                Log.d("firebase totalNum", totalNum + "");
             }
 
             @Override
@@ -101,14 +112,14 @@ public class RouteFragment extends Fragment
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ColorData colorData = dataSnapshot.getValue(ColorData.class);
-                colorMap.put(Integer.valueOf(colorData.getIdx()), colorData.getColor());
+                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
                 Log.d("firebase-color added", colorData.getColor() + "");
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 ColorData colorData = dataSnapshot.getValue(ColorData.class);
-                colorMap.put(Integer.valueOf(colorData.getIdx()), colorData.getColor());
+                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
                 Log.d("firebase-color changed", colorData.getColor() + "");
             }
 
@@ -130,7 +141,7 @@ public class RouteFragment extends Fragment
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 MapData mapData = dataSnapshot.getValue(MapData.class);
-                pathList.add(mapData);
+                pathList[mapData.getDiagNum()].add(mapData);
                 gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
                 Log.d("firebase-path added", mapData.getIdx() + "");
             }
@@ -138,7 +149,7 @@ public class RouteFragment extends Fragment
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 MapData mapData = dataSnapshot.getValue(MapData.class);
-                pathList.add(mapData);
+                pathList[mapData.getDiagNum()].add(mapData);
                 gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
                 Log.d("firebase-path changed", mapData.getIdx() + "");
             }
@@ -171,6 +182,7 @@ public class RouteFragment extends Fragment
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -209,16 +221,46 @@ public class RouteFragment extends Fragment
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng CENTER = new LatLng(36.675801, 127.990564);
-        /*마커 옵션 수정하는 부분
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(SEOUL);
-//        markerOptions.title("서울");
-//        markerOptions.snippet("수도");
-//        googleMap.addMarker(markerOptions);
-         */
-
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
         //함수를 통해서 얻어온다.
+//        LatLng INCHEON_INHAUNIV_HIGHTECH = new LatLng(37.450686, 126.657126);
+//        MarkerOptions markerOptions0 = new MarkerOptions();
+//        markerOptions0.position(INCHEON_INHAUNIV_HIGHTECH);
+//        markerOptions0.title("인하대학교 하이테크센터");
+//        markerOptions0.snippet("밑에 정보");
+//        markerOptions0.icon(BitmapDescriptorFactory.defaultMarker(0));
+//        googleMap.addMarker(markerOptions0);
+
+        for(int i=1; i<=totalNum; i++){
+            MarkerOptions markerOptions = new MarkerOptions();
+            PolylineOptions polylineOptions;
+            List<LatLng> arrayPoints = new ArrayList<>();
+            //color 불러오기
+            int color = colorMap[i];
+            for(int j=0; j<gpsData[i].size(); j++){
+                //gpsData 배열로부터 위도, 경도 정보 불러오기
+                LatLng position = gpsData[i].get(j).latlng;
+                //경로 마다 comment 불러오기
+                String comment = pathList[i].get(j).getExplain();
+                //i번째 확진자에 대한 title 지정하기
+                markerOptions.title(i + "번째 확진자" + (j+1));
+                //i번째 확진자에 대한 snippet 지정하기
+                markerOptions.snippet(comment);
+                //i번째 확진자에 대한 position 지정하기
+                markerOptions.position(position);
+                //i번째 확진자에 대한 색 지정하기
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
+                googleMap.addMarker(markerOptions);
+
+                polylineOptions = new PolylineOptions();
+                polylineOptions.width(7);
+                arrayPoints.add(position);
+                polylineOptions.addAll(arrayPoints);
+                googleMap.addPolyline(polylineOptions);
+
+
+            }
+        }
         /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(CENTER));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(7));
