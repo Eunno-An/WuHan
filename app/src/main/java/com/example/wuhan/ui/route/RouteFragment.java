@@ -76,15 +76,6 @@ public class RouteFragment extends Fragment
                 ViewModelProviders.of(this).get(RouteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
         mapView = (MapView)root.findViewById(R.id.map);
-        mapView.getMapAsync(this);
-
-
-        return root;
-    }
-    @Override
-    public void onCreate(@NonNull Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
         //여기부터 디비 추가!!!!
         for(int i = 0; i < diagnosisCapacity; i++){
             gpsData[i] = new ArrayList<>();
@@ -171,6 +162,13 @@ public class RouteFragment extends Fragment
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+
+        mapView.getMapAsync(this);
+        return root;
+    }
+    @Override
+    public void onCreate(@NonNull Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
 
     }
 
