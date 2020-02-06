@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Toast toast;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        changePrefValue();
         //↓↓↓↓↓↓↓↓↓↓↓↓DB에서 경보 단계 불러오기 시작!↓↓↓↓↓↓↓↓↓↓↓↓
         //1. DB에서 경보 단계를 불러온다
         //2. 경보 단계에 따라 다중 조건문으로 ImageView 객체를 수정한다.
@@ -108,5 +110,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    public void changePrefValue() {
+        //SharedPreferences sharedPref = getSharedPreferences(getString(R.string.pref_key_diagnose), MODE_PRIVATE);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor edit = sharedPref.edit();
+        edit.putBoolean(getString(R.string.pref_key_diagnose),false);
+        edit.commit();
+        Log.e("changePrefValue","change to flase");
+    }
 }

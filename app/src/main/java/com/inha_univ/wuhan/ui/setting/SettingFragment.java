@@ -32,9 +32,6 @@ public class SettingFragment extends PreferenceFragmentCompat {
         final SwitchPreferenceCompat route_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_route));
 
 
-
-
-
         diagnose_onoff.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {   // 확진자 수 관련 알림 변화 리스너
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
