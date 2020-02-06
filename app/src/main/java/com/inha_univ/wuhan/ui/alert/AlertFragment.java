@@ -1,5 +1,9 @@
 package com.inha_univ.wuhan.ui.alert;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +14,7 @@ import android.widget.Toast;
 
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.inha_univ.wuhan.MainActivity;
 import com.inha_univ.wuhan.R;
 import com.inha_univ.wuhan.db.Patient;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +46,7 @@ public class AlertFragment extends Fragment {
                 ViewModelProviders.of(this).get(AlertViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_alert, contatiner,false);
         super.onCreate(savedInstanceState);
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -97,6 +103,7 @@ public class AlertFragment extends Fragment {
 
         return root;
     }
+
 
 
 

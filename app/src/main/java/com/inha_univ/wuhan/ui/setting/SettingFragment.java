@@ -2,10 +2,15 @@ package com.inha_univ.wuhan.ui.setting;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.inha_univ.wuhan.MainActivity;
 import com.inha_univ.wuhan.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,19 +25,22 @@ import androidx.preference.SwitchPreferenceCompat;
 public class SettingFragment extends PreferenceFragmentCompat {
 
     private Activity mActivity;
+    private Boolean check1, check2, first;
+    private SwitchPreferenceCompat diagnose_onoff, route_onoff;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.setting, rootKey);
 
         mActivity = this.getActivity();
+        diagnose_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_diagnose));
+        route_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_route));
 
 
-        final SwitchPreferenceCompat diagnose_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_diagnose));
-        final SwitchPreferenceCompat route_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_route));
 
 
-
+        //main에서 보내준 bundle 값을 통해서
+        //switchPreference 값 설정하기
 
 
         diagnose_onoff.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {   // 확진자 수 관련 알림 변화 리스너
@@ -58,7 +66,6 @@ public class SettingFragment extends PreferenceFragmentCompat {
                 }else {  // 확진자 수 알림이 켜지는 것 감지
                     Toast.makeText(mActivity,"확진자 수 알림이 켜졌습니다.",Toast.LENGTH_SHORT).show();
                     diagnose_onoff.setChecked(true);
-
                     FirebaseMessaging.getInstance().subscribeToTopic("diag").addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
