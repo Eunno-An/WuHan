@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:316515366256:android:def2196047e3f738780bb5",
+        "mobilesdk_app_id": "1:316515366256:android:5d0df681883280de780bb5",
         "android_client_info": {
-          "package_name": "com.example.wuhan"
+          "package_name": "com.inha_univ.wuhan"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "316515366256-7fhgbgflb6qlg3jpofbc7vfe3vp3j384.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.wuhan",
-            "certificate_hash": "4fb38032d674656ccd4a56a1e7922bc6829ce791"
-          }
-        },
         {
           "client_id": "316515366256-vg8a4ki3v4nvvo23t5ui48sv835ivco2.apps.googleusercontent.com",
           "client_type": 3
