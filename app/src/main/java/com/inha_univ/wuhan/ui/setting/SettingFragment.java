@@ -14,19 +14,25 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 
 public class SettingFragment extends PreferenceFragmentCompat {
-    private Context mContext;
+
     private Activity mActivity;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.setting, rootKey);
 
-        mContext = this.getActivity();
         mActivity = this.getActivity();
+
+
         final SwitchPreferenceCompat diagnose_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_diagnose));
         final SwitchPreferenceCompat route_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_route));
+
+
+
 
 
         diagnose_onoff.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {   // 확진자 수 관련 알림 변화 리스너

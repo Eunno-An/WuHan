@@ -1,5 +1,7 @@
 package com.inha_univ.wuhan;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
@@ -18,19 +20,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreferenceCompat;
 
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
-
+    private Activity mActivity;
     //solchan commit
     private AppBarConfiguration mAppBarConfiguration;
     private ImageView imageView;
     private long backKeyPressedTime = 0;
     private Toast toast;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,5 +107,6 @@ public class MainActivity extends AppCompatActivity {
             toast.cancel();
         }
     }
+
 
 }
