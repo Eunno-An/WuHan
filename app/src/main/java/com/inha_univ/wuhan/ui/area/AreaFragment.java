@@ -75,7 +75,7 @@ public class AreaFragment extends Fragment {
 
                 MapData tmp = dataSnapshot.getValue(MapData.class);
                 String date = Integer.valueOf(tmp.getDate()).toString().substring(4,6) + "/" + Integer.valueOf(tmp.getDate()).toString().substring(6);
-                ItemObject2 item = new ItemObject2(date, tmp.getCity(), tmp.getExplain());
+                ItemObject2 item = new ItemObject2(date, tmp.getDiagNum()+"번 확진자", tmp.getExplain());
                 if(tmp.getCity().equals("경기/인천")){
                     list.add(item);
                 }
