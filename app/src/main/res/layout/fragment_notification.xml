@@ -13,31 +13,32 @@
         android:foreground="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/tv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationList"
-        android:layout_width="454dp"
+        android:layout_width="410dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tv"
-        android:layout_width="382dp"
-        android:layout_height="56dp"
-        android:gravity="center"
+        android:layout_width="419dp"
+        android:layout_height="106dp"
+        android:gravity="center|top"
         android:text="대한민국 보건복지부의 실시간 보도자료입니다.\n 글을 클릭하면 보건복지부의 해당 보도자료 페이지로 이동합니다."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852" />
+        app:layout_constraintVertical_bias="0.993" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
