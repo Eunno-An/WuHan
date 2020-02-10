@@ -1,13 +1,18 @@
 package com.inha_univ.wuhan.ui.route;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.inha_univ.wuhan.R;
 import com.inha_univ.wuhan.db.ColorData;
 import com.inha_univ.wuhan.db.LatLngWithIdx;
@@ -32,6 +37,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +46,9 @@ import java.util.List;
 public class RouteFragment extends Fragment
         implements OnMapReadyCallback {
     private RouteViewModel routeViewModel;
-
+    private GoogleMap map;
     private MapView mapView = null;
-
+    public MarkerOptions[][] markerlist = new MarkerOptions[100][30];
     private int totalNum;   //총 확진자 수
     private final int diagnosisCapacity = 100;
 
@@ -51,12 +58,14 @@ public class RouteFragment extends Fragment
     //경로 저장
     private ArrayList<MapData>[] pathList = new ArrayList[diagnosisCapacity];       //확진자별 정보
     private ArrayList<LatLngWithIdx>[] gpsData = new ArrayList[diagnosisCapacity];     //확진자 별 경로, gpsData[1]은 1번 확진자의 경로
-
+    private MyAdapter3 myAdapter3;
     //색 지정
     float hue;
     float saturation = 13;
     float brightness = 14;
     float[] HSV = new float[3];
+    public int numberofp = 0;
+    public ArrayList<String> s = new ArrayList<>();
     public RouteFragment(){
 
     }
@@ -67,7 +76,7 @@ public class RouteFragment extends Fragment
         routeViewModel =
                 ViewModelProviders.of(this).get(RouteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
-        mapView = (MapView)root.findViewById(R.id.map);
+
 
         //여기부터 디비 추가!!!!
         for(int i = 0; i < diagnosisCapacity; i++){
@@ -155,6 +164,100 @@ public class RouteFragment extends Fragment
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_popup, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(root.getContext());
+        dialog.setContentView(dialogView);
+        //리사이클러 뷰 객체 참조
+        final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
+        Button b = (Button)root.findViewById(R.id.button);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                map.clear();
+                for(int i=1; i<=totalNum; i++){
+                    if(s.get(i-1) == "b"){
+                        continue;
+                    }
+                    Log.e("onMapReady", "color");
+                    Log.e("totalNum Size", totalNum+"");
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    PolylineOptions polylineOptions;
+                    List<LatLng> arrayPoints = new ArrayList<>();
+                    //color 불러오기
+                    int color = colorMap[i];
+                    HSV[0] = color;
+                    HSV[1] = saturation;
+                    HSV[2] = brightness;
+                    int rgb = Color.HSVToColor(HSV);
+                    Log.e("gpsData Size", gpsData[i].size()+"");
+                    for(int j=0; j<gpsData[i].size(); j++){
+                        //MarkerOptions markerOptions = markerlist[i][j];
+                        Log.e("gpsData", gpsData[i].size()+"");
+                        //gpsData 배열로부터 위도, 경도 정보 불러오기
+                        LatLng position = gpsData[i].get(j).latlng;
+                        //경로 마다 comment 불러오기
+                        String comment = pathList[i].get(j).getExplain();
+                        //i번째 확진자에 대한 title 지정하기
+                        markerOptions.title(i + "번째 확진자" + (j+1));
+                        if(numberofp < i){
+                            numberofp = i;
+                            s.add("a");
+                        }
+                        //i번째 확진자에 대한 snippet 지정하기
+                        markerOptions.snippet(comment);
+                        //i번째 확진자에 대한 position 지정하기
+                        markerOptions.position(position);
+                        //i번째 확진자에 대한 색 지정하기
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
+                        map.addMarker(markerOptions);
+
+
+                        polylineOptions = new PolylineOptions();
+                        polylineOptions.width(7);
+                        arrayPoints.add(position);
+                        polylineOptions.color(rgb);
+                        polylineOptions.addAll(arrayPoints);
+                        map.addPolyline(polylineOptions);
+
+                    }
+                }
+                //메시지 띄우기
+                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        Toast.makeText(getContext(), marker.getSnippet(), Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                });
+                /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
+
+                map.animateCamera(CameraUpdateFactory.zoomTo(7));
+            }
+        });
+        for(int i = 0; i < numberofp; i++){
+            s.add("a");
+        }
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView 클릭될 시 할 코드작성
+                //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
+
+                myAdapter3 = new MyAdapter3(s);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(myAdapter3);
+
+                TextView dialogText = dialog.findViewById(R.id.dialogtext1);
+                dialogText.setText(s.get(5));
+
+                //다이얼로그를 띄우는 코드
+                dialog.show();
+            }
+        });
+        mapView = (MapView)root.findViewById(R.id.map);
         mapView.getMapAsync(this);
         return root;
     }
@@ -198,7 +301,7 @@ public class RouteFragment extends Fragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onLowMemory();
+        mapView.onDestroy();
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -216,7 +319,7 @@ public class RouteFragment extends Fragment
     public void onMapReady(GoogleMap googleMap) {
         Log.e("onMapReady", "onon");
         LatLng CENTER = new LatLng(36.675801, 127.990564);
-
+        map = googleMap;
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
         //함수를 통해서 얻어온다.
 //        LatLng INCHEON_INHAUNIV_HIGHTECH = new LatLng(37.450686, 126.657126);
@@ -241,6 +344,7 @@ public class RouteFragment extends Fragment
             int rgb = Color.HSVToColor(HSV);
             Log.e("gpsData Size", gpsData[i].size()+"");
             for(int j=0; j<gpsData[i].size(); j++){
+                //MarkerOptions markerOptions = markerlist[i][j];
                 Log.e("gpsData", gpsData[i].size()+"");
                 //gpsData 배열로부터 위도, 경도 정보 불러오기
                 LatLng position = gpsData[i].get(j).latlng;
@@ -248,6 +352,10 @@ public class RouteFragment extends Fragment
                 String comment = pathList[i].get(j).getExplain();
                 //i번째 확진자에 대한 title 지정하기
                 markerOptions.title(i + "번째 확진자" + (j+1));
+                if(numberofp < i){
+                    numberofp = i;
+                    s.add("a");
+                }
                 //i번째 확진자에 대한 snippet 지정하기
                 markerOptions.snippet(comment);
                 //i번째 확진자에 대한 position 지정하기
@@ -256,12 +364,17 @@ public class RouteFragment extends Fragment
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
                 googleMap.addMarker(markerOptions);
 
+
                 polylineOptions = new PolylineOptions();
                 polylineOptions.width(7);
                 arrayPoints.add(position);
                 polylineOptions.color(rgb);
                 polylineOptions.addAll(arrayPoints);
                 googleMap.addPolyline(polylineOptions);
+<<<<<<< HEAD
+=======
+
+>>>>>>> han
             }
         }
         //메시지 띄우기
