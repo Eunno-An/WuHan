@@ -6,8 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.inha_univ.wuhan.R;
 import com.inha_univ.wuhan.db.ColorData;
 import com.inha_univ.wuhan.db.LatLngWithIdx;
@@ -32,6 +35,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +161,35 @@ public class RouteFragment extends Fragment
             public void onCancelled(DatabaseError databaseError) { }
         });
         mapView.getMapAsync(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_popup, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(root.getContext());
+        dialog.setContentView(dialogView);
+        //리사이클러 뷰 객체 참조
+        final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
+        Button b = (Button)root.findViewById(R.id.button);
+        final ArrayList<String> s = new ArrayList<>();
+        s.add("a");
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView 클릭될 시 할 코드작성
+                //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
+
+                MyAdapter3 myAdapter2 = new MyAdapter3(s);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(myAdapter2);
+
+                TextView dialogText = dialog.findViewById(R.id.dialogtext1);
+
+                //다이얼로그 제목 바꾸는 코드
+                dialogText.setText("경인");
+
+                //다이얼로그를 띄우는 코드
+                dialog.show();
+            }
+        });
+
         return root;
     }
 
