@@ -1,13 +1,17 @@
 package com.inha_univ.wuhan.ui.route;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.inha_univ.wuhan.R;
 import com.inha_univ.wuhan.db.ColorData;
 import com.inha_univ.wuhan.db.LatLngWithIdx;
@@ -32,6 +36,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +65,9 @@ public class RouteFragment extends Fragment
     float[] HSV = new float[3];
     public int numberofp = 0;
     public ArrayList<String> s = new ArrayList<>();
+    private Button finding_hospital;
+    private Button selecting_confirmators;
+    private GoogleMap map;
     public RouteFragment(){
 
     }
@@ -176,7 +185,7 @@ public class RouteFragment extends Fragment
         dialog.setContentView(dialogView);
         //리사이클러 뷰 객체 참조
         final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
-        Button b = (Button)root.findViewById(R.id.button);
+        Button b = (Button)root.findViewById(R.id.selecting_confirmator);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
