@@ -371,10 +371,7 @@ public class RouteFragment extends Fragment
                 polylineOptions.color(rgb);
                 polylineOptions.addAll(arrayPoints);
                 googleMap.addPolyline(polylineOptions);
-<<<<<<< HEAD
-=======
 
->>>>>>> han
             }
         }
         //메시지 띄우기
