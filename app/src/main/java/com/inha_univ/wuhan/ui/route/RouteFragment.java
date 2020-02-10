@@ -3,9 +3,12 @@ package com.inha_univ.wuhan.ui.route;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.inha_univ.wuhan.R;
@@ -57,6 +60,9 @@ public class RouteFragment extends Fragment
     float saturation = 13;
     float brightness = 14;
     float[] HSV = new float[3];
+
+    //fragment에 있는 옵션
+    private Button finding_hospital, selecting_confirmators; // 선별 진료소 확인, 확진자 경로 확인 버튼
     public RouteFragment(){
 
     }
@@ -66,15 +72,29 @@ public class RouteFragment extends Fragment
                              @Nullable ViewGroup contatiner, @Nullable Bundle savedInstanceState){
         routeViewModel =
                 ViewModelProviders.of(this).get(RouteViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
+        final View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
         mapView = (MapView)root.findViewById(R.id.map);
+
+        finding_hospital = (Button)root.findViewById(R.id.finding_hospital);
+        selecting_confirmators = (Button)root.findViewById(R.id.selecting_confirmator);
 
         //여기부터 디비 추가!!!!
         for(int i = 0; i < diagnosisCapacity; i++){
             gpsData[i] = new ArrayList<>();
             pathList[i] = new ArrayList<>();
+
         }
 
+        finding_hospital.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){//선별 진료소 선택 버튼
+                Log.e("finding_hospital", "button clicked");
+            }
+        });
+        selecting_confirmators.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){//확진자 선택 버튼
+                Log.e("selecting_confirm","button clicked");
+            }
+        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -86,8 +106,7 @@ public class RouteFragment extends Fragment
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 totalNum = ((Long) dataSnapshot.getValue()).intValue();
-                Log.d("ming", "ming");
-                Log.d("firebase totalNum", totalNum + "");
+
             }
 
             @Override
@@ -217,6 +236,7 @@ public class RouteFragment extends Fragment
         Log.e("onMapReady", "onon");
         LatLng CENTER = new LatLng(36.675801, 127.990564);
 
+
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
         //함수를 통해서 얻어온다.
 //        LatLng INCHEON_INHAUNIV_HIGHTECH = new LatLng(37.450686, 126.657126);
@@ -228,6 +248,8 @@ public class RouteFragment extends Fragment
 //        googleMap.addMarker(markerOptions0);
 
         for(int i=1; i<=totalNum; i++){
+
+
             Log.e("onMapReady", "color");
             Log.e("totalNum Size", totalNum+"");
             MarkerOptions markerOptions = new MarkerOptions();
@@ -240,6 +262,8 @@ public class RouteFragment extends Fragment
             HSV[2] = brightness;
             int rgb = Color.HSVToColor(HSV);
             Log.e("gpsData Size", gpsData[i].size()+"");
+
+
             for(int j=0; j<gpsData[i].size(); j++){
                 Log.e("gpsData", gpsData[i].size()+"");
                 //gpsData 배열로부터 위도, 경도 정보 불러오기
@@ -254,8 +278,7 @@ public class RouteFragment extends Fragment
                 markerOptions.position(position);
                 //i번째 확진자에 대한 색 지정하기
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
-                googleMap.addMarker(markerOptions);
-
+                //googleMap.addMarker(markerOptions);
                 polylineOptions = new PolylineOptions();
                 polylineOptions.width(7);
                 arrayPoints.add(position);
