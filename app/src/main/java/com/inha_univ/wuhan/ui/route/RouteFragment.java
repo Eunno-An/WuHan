@@ -332,6 +332,7 @@ public class RouteFragment extends Fragment
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
         Log.e("onMapReady", "onon");
         LatLng CENTER = new LatLng(36.675801, 127.990564);
 
