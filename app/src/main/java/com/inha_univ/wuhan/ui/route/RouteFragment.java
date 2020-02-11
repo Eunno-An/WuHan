@@ -172,6 +172,7 @@ public class RouteFragment extends Fragment
         final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(dialogView);
         //리사이클러 뷰 객체 참조
+
         final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
         Button b = (Button)getActivity().findViewById(R.id.selecting_confirmator);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -203,10 +204,7 @@ public class RouteFragment extends Fragment
                         String comment = pathList[i].get(j).getExplain();
                         //i번째 확진자에 대한 title 지정하기
                         markerOptions.title(i + "번째 확진자" + (j+1));
-                        if(numberofp < i){
-                            numberofp = i;
-                            stringArrayList.add("a");
-                        }
+
                         //i번째 확진자에 대한 snippet 지정하기
                         markerOptions.snippet(comment);
                         //i번째 확진자에 대한 position 지정하기
@@ -238,9 +236,7 @@ public class RouteFragment extends Fragment
                 map.animateCamera(CameraUpdateFactory.zoomTo(7));
             }
         });
-        for(int i = 0; i < numberofp; i++){
-            stringArrayList.add("a");
-        }
+
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,7 +250,7 @@ public class RouteFragment extends Fragment
                 recyclerView.setAdapter(myAdapter3);
 
                 TextView dialogText = dialog.findViewById(R.id.dialogtext1);
-                dialogText.setText(stringArrayList.get(5));
+                //dialogText.setText(stringArrayList.get(5));
 
                 //다이얼로그를 띄우는 코드
                 dialog.show();
@@ -288,7 +284,9 @@ public class RouteFragment extends Fragment
                 // whenever data at this location is updated.
                 totalNum = ((Long) dataSnapshot.child("main").child("diagnosis").getValue()).intValue();
                 Log.e("totalNum Size in eunno", totalNum+"");
-
+                for(int i = 0; i < totalNum; i++){
+                    stringArrayList.add("a");
+                }
                 for(int i=1; i<=totalNum; i++){
                     ColorData colorData = (ColorData)dataSnapshot.child("color").child(i+"").getValue(ColorData.class);
                     colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
@@ -325,10 +323,10 @@ public class RouteFragment extends Fragment
                         String comment = pathList[i].get(j).getExplain();
                         //i번째 확진자에 대한 title 지정하기
                         markerOptions.title(i + "번째 확진자" + (j+1));
-                        if(numberofp < i){
+                        /*if(numberofp < i){
                             numberofp = i;
                             stringArrayList.add("a");
-                        }
+                        }*/
                         //i번째 확진자에 대한 snippet 지정하기
                         markerOptions.snippet(comment);
                         //i번째 확진자에 대한 position 지정하기
