@@ -289,14 +289,17 @@ public class RouteFragment extends Fragment
                 totalNum = ((Long) dataSnapshot.child("main").child("diagnosis").getValue()).intValue();
                 Log.e("totalNum Size in eunno", totalNum+"");
 
-                ColorData colorData = (ColorData)dataSnapshot.child("color").getValue(ColorData.class);
-                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
-
-                MapData mapData = dataSnapshot.child("map").getValue(MapData.class);
-                pathList[mapData.getDiagNum()].add(mapData);
-                gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
-                Log.d("firebase-path added", mapData.getIdx() + "");
-                Log.d("firebase-color added", colorData.getColor() + "");
+                for(int i=1; i<=totalNum; i++){
+                    ColorData colorData = (ColorData)dataSnapshot.child("color").child(i+"").getValue(ColorData.class);
+                    colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
+                    Log.d("firebase-color added", colorData.getColor() + "");
+                }
+//                for(int i=1; i<=totalNum; i++){
+//                    MapData mapData = dataSnapshot.child("map").child(i+"").getValue(MapData.class);
+//                    pathList[mapData.getDiagNum()].add(mapData);
+//                    gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
+//                    Log.d("firebase-path added", mapData.getIdx() + "");
+//                }
                 Log.d("ming", "ming");
                 Log.d("firebase totalNum", totalNum + "");
                 for(int i=1; i<=totalNum; i++){
