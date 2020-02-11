@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.inha_univ.wuhan.R;
 import com.inha_univ.wuhan.db.ColorData;
@@ -316,7 +317,7 @@ public class RouteFragment extends Fragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onLowMemory();
+        mapView.onDestroy();
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -335,7 +336,8 @@ public class RouteFragment extends Fragment
         map = googleMap;
         Log.e("onMapReady", "onon");
         LatLng CENTER = new LatLng(36.675801, 127.990564);
-
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(CENTER));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(7));
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
         //함수를 통해서 얻어온다.
 //        LatLng INCHEON_INHAUNIV_HIGHTECH = new LatLng(37.450686, 126.657126);
@@ -396,7 +398,8 @@ public class RouteFragment extends Fragment
             }
         });
         /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(CENTER));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(7));
+
     }
+
+
 }
