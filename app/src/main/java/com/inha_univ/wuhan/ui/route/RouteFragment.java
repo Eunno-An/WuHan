@@ -294,12 +294,14 @@ public class RouteFragment extends Fragment
                     colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
                     Log.d("firebase-color added", colorData.getColor() + "");
                 }
+                //인아쓰 이걸 어떻게 수정하면 될까유
 //                for(int i=1; i<=totalNum; i++){
 //                    MapData mapData = dataSnapshot.child("map").child(i+"").getValue(MapData.class);
 //                    pathList[mapData.getDiagNum()].add(mapData);
 //                    gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
 //                    Log.d("firebase-path added", mapData.getIdx() + "");
 //                }
+
                 Log.d("ming", "ming");
                 Log.d("firebase totalNum", totalNum + "");
                 for(int i=1; i<=totalNum; i++){
