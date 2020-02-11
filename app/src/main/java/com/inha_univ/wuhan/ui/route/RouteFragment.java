@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -236,8 +237,30 @@ public class RouteFragment extends Fragment
                 map.animateCamera(CameraUpdateFactory.zoomTo(7));
             }
         });
+        Button deselectButton = dialog.findViewById(R.id.deselect);
+        deselectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
 
+                for(int i = 0; i < totalNum; i++){
+                    stringArrayList.set(i,"b");
+                }
+                dialog.dismiss();
 
+            }
+        });
+        Button selectButton = dialog.findViewById(R.id.select);
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+
+                for(int i = 0; i < totalNum; i++){
+                    stringArrayList.set(i,"a");
+                }
+                dialog.dismiss();
+
+            }
+        });
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
