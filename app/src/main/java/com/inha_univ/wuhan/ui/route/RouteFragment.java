@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.inha_univ.wuhan.R;
 import com.inha_univ.wuhan.db.ColorData;
@@ -65,7 +64,7 @@ public class RouteFragment extends Fragment
     float brightness = 14;
     float[] HSV = new float[3];
     public int numberofp = 0;
-    public ArrayList<String> s = new ArrayList<>();
+    final public ArrayList<String> stringArrayList = new ArrayList<>();
     private Button finding_hospital;
     private Button selecting_confirmators;
     private GoogleMap map;
@@ -101,178 +100,8 @@ public class RouteFragment extends Fragment
             }
         });
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        //확진자 수
-        DatabaseReference diagnosisRef = database.getReference("main/diagnosis");
-        diagnosisRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                totalNum = ((Long) dataSnapshot.getValue()).intValue();
-                Log.d("ming", "ming");
-                Log.d("firebase totalNum", totalNum + "");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("firebase - 확진자수 읽기 에러", "Failed to read value.", error.toException());
-            }
-        });
-
-        //색 정보 받아오기
-        DatabaseReference colorRef = database.getReference("color");
-
-        colorRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                ColorData colorData = dataSnapshot.getValue(ColorData.class);
-                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
-                Log.d("firebase-color added", colorData.getColor() + "");
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                ColorData colorData = dataSnapshot.getValue(ColorData.class);
-                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
-                Log.d("firebase-color changed", colorData.getColor() + "");
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) { }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
 
 
-
-        //경로 받아오기
-        DatabaseReference pathRef = database.getReference("map");
-        pathRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                MapData mapData = dataSnapshot.getValue(MapData.class);
-                pathList[mapData.getDiagNum()].add(mapData);
-                gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
-                Log.d("firebase-path added", mapData.getIdx() + "");
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                MapData mapData = dataSnapshot.getValue(MapData.class);
-                pathList[mapData.getDiagNum()].add(mapData);
-                gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
-                Log.d("firebase-path changed", mapData.getIdx() + "");
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) { }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_popup, null);
-        final BottomSheetDialog dialog = new BottomSheetDialog(root.getContext());
-        dialog.setContentView(dialogView);
-        //리사이클러 뷰 객체 참조
-        final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
-        Button b = (Button)root.findViewById(R.id.selecting_confirmator);
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                map.clear();
-                for(int i=1; i<=totalNum; i++){
-                    if(s.get(i-1) == "b"){
-                        continue;
-                    }
-                    Log.e("onMapReady", "color");
-                    Log.e("totalNum Size", totalNum+"");
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    PolylineOptions polylineOptions;
-                    List<LatLng> arrayPoints = new ArrayList<>();
-                    //color 불러오기
-                    int color = colorMap[i];
-                    HSV[0] = color;
-                    HSV[1] = saturation;
-                    HSV[2] = brightness;
-                    int rgb = Color.HSVToColor(HSV);
-                    Log.e("gpsData Size", gpsData[i].size()+"");
-                    for(int j=0; j<gpsData[i].size(); j++){
-                        //MarkerOptions markerOptions = markerlist[i][j];
-                        Log.e("gpsData", gpsData[i].size()+"");
-                        //gpsData 배열로부터 위도, 경도 정보 불러오기
-                        LatLng position = gpsData[i].get(j).latlng;
-                        //경로 마다 comment 불러오기
-                        String comment = pathList[i].get(j).getExplain();
-                        //i번째 확진자에 대한 title 지정하기
-                        markerOptions.title(i + "번째 확진자" + (j+1));
-                        if(numberofp < i){
-                            numberofp = i;
-                            s.add("a");
-                        }
-                        //i번째 확진자에 대한 snippet 지정하기
-                        markerOptions.snippet(comment);
-                        //i번째 확진자에 대한 position 지정하기
-                        markerOptions.position(position);
-                        //i번째 확진자에 대한 색 지정하기
-                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
-                        map.addMarker(markerOptions);
-
-
-                        polylineOptions = new PolylineOptions();
-                        polylineOptions.width(7);
-                        arrayPoints.add(position);
-                        polylineOptions.color(rgb);
-                        polylineOptions.addAll(arrayPoints);
-                        map.addPolyline(polylineOptions);
-
-                    }
-                }
-                //메시지 띄우기
-                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        Toast.makeText(getContext(), marker.getSnippet(), Toast.LENGTH_LONG).show();
-                        return false;
-                    }
-                });
-                /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
-
-                map.animateCamera(CameraUpdateFactory.zoomTo(7));
-            }
-        });
-        for(int i = 0; i < numberofp; i++){
-            s.add("a");
-        }
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TextView 클릭될 시 할 코드작성
-                //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
-
-                myAdapter3 = new MyAdapter3(s);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog.getContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(myAdapter3);
-
-                TextView dialogText = dialog.findViewById(R.id.dialogtext1);
-                dialogText.setText(s.get(5));
-
-                //다이얼로그를 띄우는 코드
-                dialog.show();
-            }
-        });
         mapView = (MapView)root.findViewById(R.id.map);
         mapView.getMapAsync(this);
         return root;
@@ -336,59 +165,101 @@ public class RouteFragment extends Fragment
         map = googleMap;
         Log.e("onMapReady", "onon");
         LatLng CENTER = new LatLng(36.675801, 127.990564);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(CENTER));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(7));
         /*↓↓↓↓↓↓↓↓↓↓디비에서 위치 정보 갖고 오는 부분↓↓↓↓↓↓↓↓↓↓↓↓*/
-        //함수를 통해서 얻어온다.
-//        LatLng INCHEON_INHAUNIV_HIGHTECH = new LatLng(37.450686, 126.657126);
-//        MarkerOptions markerOptions0 = new MarkerOptions();
-//        markerOptions0.position(INCHEON_INHAUNIV_HIGHTECH);
-//        markerOptions0.title("인하대학교 하이테크센터");
-//        markerOptions0.snippet("밑에 정보");
-//        markerOptions0.icon(BitmapDescriptorFactory.defaultMarker(0));
-//        googleMap.addMarker(markerOptions0);
+        addMarkersToMap(map);
 
-        for(int i=1; i<=totalNum; i++){
-            Log.e("onMapReady", "color");
-            Log.e("totalNum Size", totalNum+"");
-            MarkerOptions markerOptions = new MarkerOptions();
-            PolylineOptions polylineOptions;
-            List<LatLng> arrayPoints = new ArrayList<>();
-            //color 불러오기
-            int color = colorMap[i];
-            HSV[0] = color;
-            HSV[1] = saturation;
-            HSV[2] = brightness;
-            int rgb = Color.HSVToColor(HSV);
-            Log.e("gpsData Size", gpsData[i].size()+"");
-            for(int j=0; j<gpsData[i].size(); j++){
-                Log.e("gpsData", gpsData[i].size()+"");
-                //gpsData 배열로부터 위도, 경도 정보 불러오기
-                LatLng position = gpsData[i].get(j).latlng;
-                //경로 마다 comment 불러오기
-                String comment = pathList[i].get(j).getExplain();
-                //i번째 확진자에 대한 title 지정하기
-                markerOptions.title(i + "번째 확진자" + (j+1));
-                if(numberofp < i){
-                    numberofp = i;
-                    s.add("a");
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_popup, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+        dialog.setContentView(dialogView);
+        //리사이클러 뷰 객체 참조
+        final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
+        Button b = (Button)getActivity().findViewById(R.id.selecting_confirmator);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                map.clear();
+                for(int i=1; i<=totalNum; i++){
+                    if(stringArrayList.get(i-1) == "b"){
+                        continue;
+                    }
+                    Log.e("onMapReady", "color");
+                    Log.e("totalNum Size", totalNum+"");
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    PolylineOptions polylineOptions;
+                    List<LatLng> arrayPoints = new ArrayList<>();
+                    //color 불러오기
+                    int color = colorMap[i];
+                    HSV[0] = color;
+                    HSV[1] = saturation;
+                    HSV[2] = brightness;
+                    int rgb = Color.HSVToColor(HSV);
+                    Log.e("gpsData Size", gpsData[i].size()+"");
+                    for(int j=0; j<gpsData[i].size(); j++){
+                        //MarkerOptions markerOptions = markerlist[i][j];
+                        Log.e("gpsData", gpsData[i].size()+"");
+                        //gpsData 배열로부터 위도, 경도 정보 불러오기
+                        LatLng position = gpsData[i].get(j).latlng;
+                        //경로 마다 comment 불러오기
+                        String comment = pathList[i].get(j).getExplain();
+                        //i번째 확진자에 대한 title 지정하기
+                        markerOptions.title(i + "번째 확진자" + (j+1));
+                        if(numberofp < i){
+                            numberofp = i;
+                            stringArrayList.add("a");
+                        }
+                        //i번째 확진자에 대한 snippet 지정하기
+                        markerOptions.snippet(comment);
+                        //i번째 확진자에 대한 position 지정하기
+                        markerOptions.position(position);
+                        //i번째 확진자에 대한 색 지정하기
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
+                        map.addMarker(markerOptions);
+
+
+                        polylineOptions = new PolylineOptions();
+                        polylineOptions.width(7);
+                        arrayPoints.add(position);
+                        polylineOptions.color(rgb);
+                        polylineOptions.addAll(arrayPoints);
+                        map.addPolyline(polylineOptions);
+
+                    }
                 }
-                //i번째 확진자에 대한 snippet 지정하기
-                markerOptions.snippet(comment);
-                //i번째 확진자에 대한 position 지정하기
-                markerOptions.position(position);
-                //i번째 확진자에 대한 색 지정하기
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
-                googleMap.addMarker(markerOptions);
+                //메시지 띄우기
+                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        Toast.makeText(getContext(), marker.getSnippet(), Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                });
+                /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
 
-                polylineOptions = new PolylineOptions();
-                polylineOptions.width(7);
-                arrayPoints.add(position);
-                polylineOptions.color(rgb);
-                polylineOptions.addAll(arrayPoints);
-                googleMap.addPolyline(polylineOptions);
+                map.animateCamera(CameraUpdateFactory.zoomTo(7));
             }
+        });
+        for(int i = 0; i < numberofp; i++){
+            stringArrayList.add("a");
         }
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView 클릭될 시 할 코드작성
+                //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
+
+                myAdapter3 = new MyAdapter3(stringArrayList);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog.getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(myAdapter3);
+
+                TextView dialogText = dialog.findViewById(R.id.dialogtext1);
+                dialogText.setText(stringArrayList.get(5));
+
+                //다이얼로그를 띄우는 코드
+                dialog.show();
+            }
+        });
         //메시지 띄우기
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -397,9 +268,85 @@ public class RouteFragment extends Fragment
                 return false;
             }
         });
-        /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
 
+        /*↑↑↑↑↑↑↑↑↑↑디비에서 위치 정보 갖고 오는 부분 끝↑↑↑↑↑↑↑↑↑↑↑*/
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(CENTER));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(7));
     }
 
+    public void addMarkersToMap(final GoogleMap googleMap){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+        //색 정보 받아오기
+        //확진자 수
+        DatabaseReference diagnosisRef = database.getReference();
+        diagnosisRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                totalNum = ((Long) dataSnapshot.child("main").child("diagnosis").getValue()).intValue();
+                Log.e("totalNum Size in eunno", totalNum+"");
+
+                ColorData colorData = (ColorData)dataSnapshot.child("color").getValue(ColorData.class);
+                colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
+
+                MapData mapData = dataSnapshot.child("map").getValue(MapData.class);
+                pathList[mapData.getDiagNum()].add(mapData);
+                gpsData[mapData.getDiagNum()].add(new LatLngWithIdx(mapData.getIdx(), mapData.getLatitude(), mapData.getLongitude()));
+                Log.d("firebase-path added", mapData.getIdx() + "");
+                Log.d("firebase-color added", colorData.getColor() + "");
+                Log.d("ming", "ming");
+                Log.d("firebase totalNum", totalNum + "");
+                for(int i=1; i<=totalNum; i++){
+                    Log.e("onMapReady", "color");
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    PolylineOptions polylineOptions;
+                    List<LatLng> arrayPoints = new ArrayList<>();
+                    //color 불러오기
+                    int color = colorMap[i];
+                    HSV[0] = color;
+                    HSV[1] = saturation;
+                    HSV[2] = brightness;
+                    int rgb = Color.HSVToColor(HSV);
+                    Log.e("gpsData Size", gpsData[i].size()+"");
+                    for(int j=0; j<gpsData[i].size(); j++){
+                        Log.e("gpsData", gpsData[i].size()+"");
+                        //gpsData 배열로부터 위도, 경도 정보 불러오기
+                        LatLng position = gpsData[i].get(j).latlng;
+                        //경로 마다 comment 불러오기
+                        String comment = pathList[i].get(j).getExplain();
+                        //i번째 확진자에 대한 title 지정하기
+                        markerOptions.title(i + "번째 확진자" + (j+1));
+                        if(numberofp < i){
+                            numberofp = i;
+                            stringArrayList.add("a");
+                        }
+                        //i번째 확진자에 대한 snippet 지정하기
+                        markerOptions.snippet(comment);
+                        //i번째 확진자에 대한 position 지정하기
+                        markerOptions.position(position);
+                        //i번째 확진자에 대한 색 지정하기
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(color));
+                        googleMap.addMarker(markerOptions);
+
+                        polylineOptions = new PolylineOptions();
+                        polylineOptions.width(7);
+                        arrayPoints.add(position);
+                        polylineOptions.color(rgb);
+                        polylineOptions.addAll(arrayPoints);
+                        googleMap.addPolyline(polylineOptions);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("firebase - 확진자수 읽기 에러", "Failed to read value.", error.toException());
+            }
+        });
+    } //marker와 경로를 찍는 메소드
 
 }

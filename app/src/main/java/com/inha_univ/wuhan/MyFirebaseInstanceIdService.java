@@ -31,8 +31,8 @@ public class MyFirebaseInstanceIdService extends FirebaseMessagingService {
 
     String TAG="MyFirebaseInstanceIdService";
 
-    public void onNewToken(String s){
-        super.onNewToken(s);
-        Log.d("New_Token",s);
+    public void onNewToken(String stringArrayList){
+        super.onNewToken(stringArrayList);
+        Log.d("New_Token",stringArrayList);
     }
 }*/
