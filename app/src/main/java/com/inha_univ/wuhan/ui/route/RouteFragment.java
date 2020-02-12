@@ -90,19 +90,6 @@ public class RouteFragment extends Fragment
             pathList[i] = new ArrayList<>();
         }
 
-        finding_hospital.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){//선별 진료소 선택 버튼
-                Log.e("finding_hospital", "button clicked");
-            }
-        });
-        selecting_confirmators.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){//확진자 선택 버튼
-                Log.e("selecting_confirm","button clicked");
-            }
-        });
-
-
-
         mapView = (MapView)root.findViewById(R.id.map);
         mapView.getMapAsync(this);
         return root;
@@ -175,7 +162,7 @@ public class RouteFragment extends Fragment
         //리사이클러 뷰 객체 참조
 
         final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
-        Button b = (Button)getActivity().findViewById(R.id.selecting_confirmator);
+
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -261,7 +248,9 @@ public class RouteFragment extends Fragment
 
             }
         });
-        b.setOnClickListener(new View.OnClickListener() {
+
+        Button btn_select_confirm = (Button)getActivity().findViewById(R.id.selecting_confirmator);
+        btn_select_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TextView 클릭될 시 할 코드작성
@@ -279,6 +268,8 @@ public class RouteFragment extends Fragment
                 dialog.show();
             }
         });
+
+
         //메시지 띄우기
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
