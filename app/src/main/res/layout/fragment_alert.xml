@@ -10,11 +10,10 @@
         android:id="@+id/animation_view"
         android:layout_width="321dp"
         android:layout_height="322dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/main_text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146"
         app:lottie_autoPlay="true" />
 
     <TextView
@@ -25,26 +24,27 @@
         android:text="오늘의 감염병 위기경보 단계"
         android:textColor="#000000"
         android:textSize="22dp"
-        app:layout_constraintBottom_toTopOf="@+id/animation_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.022" />
 
     <TextView
         android:id="@+id/out_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
 
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
         android:textColor="#000000"
         android:textSize="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.673"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ing_num"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/confirm_num"
@@ -54,58 +54,49 @@
 
         android:textColor="#000000"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/outDiag_num"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.673"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_text"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintTop_toBottomOf="@+id/main_text" />
 
     <TextView
         android:id="@+id/ing_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="140dp"
         android:gravity="center"
         android:text="검사중"
         android:textColor="#6D6D6D"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/out_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/death_text"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/ing_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginBottom="140dp"
         android:textColor="#000000"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/out_num"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.673"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/death_num"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/death_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-
         android:textColor="#000000"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ing_num"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.673"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outDiag_num"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/death_text"
@@ -115,12 +106,10 @@
         android:text="사망자"
         android:textColor="#6D6D6D"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ing_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outDiag_text"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/confirm_text"
@@ -130,42 +119,40 @@
         android:text="확진자"
         android:textColor="#6D6D6D"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/outDiag_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_text"
-        app:layout_constraintVertical_bias="0.033" />
-
+        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/out_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:text="결과 음성"
         android:textColor="#6D6D6D"
         android:textSize="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.324"
+        app:layout_constraintHorizontal_bias="0.366"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ing_text"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/main_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="276dp"
+        android:layout_marginBottom="4dp"
         android:gravity="center"
         android:textColor="#C70909"
         android:textSize="45dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/confirm_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_text" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/outDiag_text"
@@ -175,12 +162,10 @@
         android:text="확진자 격리해제"
         android:textColor="#6D6D6D"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/death_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_text"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/outDiag_num"
@@ -189,12 +174,10 @@
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/death_num"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.673"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_num"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
