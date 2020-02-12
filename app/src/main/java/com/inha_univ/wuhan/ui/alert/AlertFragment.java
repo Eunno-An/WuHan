@@ -37,9 +37,8 @@ public class AlertFragment extends Fragment {
 
     private TextView deathTextView; //사망자 수
     private TextView ingTextView; // 검사중 수
-    private TextView outTextView;  // 격리해제(결과음성) 수
+    private TextView outTextView;  // 격리해제 수
     private TextView confirmTextView; // 확진자 수
-    private TextView outDiagTextView;   //확진자 격리해제 수
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup contatiner, Bundle savedInstanceState){
@@ -101,25 +100,7 @@ public class AlertFragment extends Fragment {
             }
         });
 
-        //확진자 격리해제 수
-        DatabaseReference outDiagRef = database.getReference("outDiag");
-        outDiagRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                int outDiagNum = ((Long) dataSnapshot.getValue()).intValue();
-                outDiagTextView = (TextView)root.findViewById(R.id.outDiag_num);
-                outDiagTextView.setText(outDiagNum+"");
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Failed to read value
-                Log.w("firebase - 확진자수 읽기 에러", "Failed to read value.", error.toException());
-            }
-        });
         return root;
     }
 
