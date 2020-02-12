@@ -160,8 +160,15 @@ public class RouteFragment extends Fragment
         final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(dialogView);
         //리사이클러 뷰 객체 참조
-
         final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
+
+        View dialogView2 = getLayoutInflater().inflate(R.layout.dialog_popup2, null);
+        final BottomSheetDialog dialog2 = new BottomSheetDialog(getActivity());
+        dialog2.setContentView(dialogView2);
+        //진료소 팝업의 리사이클러뷰
+        final RecyclerView recyclerView2 = (RecyclerView)dialog2.findViewById(R.id.recycler2);
+
+
 
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -253,7 +260,7 @@ public class RouteFragment extends Fragment
         btn_select_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TextView 클릭될 시 할 코드작성
+
                 //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
 
                 myAdapter3 = new MyAdapter3(stringArrayList);
@@ -261,15 +268,32 @@ public class RouteFragment extends Fragment
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(myAdapter3);
 
-                TextView dialogText = dialog.findViewById(R.id.dialogtext1);
-                //dialogText.setText(stringArrayList.get(5));
+
+
 
                 //다이얼로그를 띄우는 코드
                 dialog.show();
             }
         });
 
+        Button btn_select_hospital = (Button)getActivity().findViewById(R.id.finding_hospital);
+        btn_select_hospital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
+                //마이어댑터 3.class 복붙해서 마이어댑터 4 만들고 좀만 수정하면 돼요 리사이클러뷰 쓰는지 안쓰는지 몰라서 그냥 놔둘게요
+               /* myAdapter4 = new MyAdapter4(stringArrayList);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog2.getContext());
+                recyclerView2.setLayoutManager(layoutManager);
+                recyclerView2.setAdapter(myAdapter4);*/
+
+
+
+                //다이얼로그를 띄우는 코드
+                dialog2.show();
+            }
+        });
         //메시지 띄우기
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
