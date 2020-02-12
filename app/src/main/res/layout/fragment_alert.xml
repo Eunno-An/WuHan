@@ -10,11 +10,9 @@
         android:id="@+id/animation_view"
         android:layout_width="321dp"
         android:layout_height="322dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/info_text"
-        app:layout_constraintVertical_bias="0.0"
         app:lottie_autoPlay="true" />
 
     <TextView
@@ -155,12 +153,10 @@
         android:textColor="#C70909"
         android:textSize="45dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animation_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/animation_view" />
 
     <TextView
         android:id="@+id/outDiag_text"
