@@ -81,7 +81,6 @@ public class RouteFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
         mapView = (MapView)root.findViewById(R.id.map);
 
-        finding_hospital = (Button)root.findViewById(R.id.finding_hospital);
         selecting_confirmators = (Button)root.findViewById(R.id.selecting_confirmator);
 
         //여기부터 디비 추가!!!!
@@ -267,33 +266,12 @@ public class RouteFragment extends Fragment
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog.getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(myAdapter3);
-
-
-
-
                 //다이얼로그를 띄우는 코드
                 dialog.show();
             }
         });
 
-        Button btn_select_hospital = (Button)getActivity().findViewById(R.id.finding_hospital);
-        btn_select_hospital.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
-                //마이어댑터 3.class 복붙해서 마이어댑터 4 만들고 좀만 수정하면 돼요 리사이클러뷰 쓰는지 안쓰는지 몰라서 그냥 놔둘게요
-               /* myAdapter4 = new MyAdapter4(stringArrayList);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog2.getContext());
-                recyclerView2.setLayoutManager(layoutManager);
-                recyclerView2.setAdapter(myAdapter4);*/
-
-
-
-                //다이얼로그를 띄우는 코드
-                dialog2.show();
-            }
-        });
         //메시지 띄우기
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -310,8 +288,6 @@ public class RouteFragment extends Fragment
 
     public void addMarkersToMap(final GoogleMap googleMap){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
         //색 정보 받아오기
         //확진자 수
         DatabaseReference diagnosisRef = database.getReference();
@@ -325,9 +301,10 @@ public class RouteFragment extends Fragment
                 for(int i = 0; i < totalNum; i++){
                     stringArrayList.add("a");
                 }
-                for(int i=1; i<=totalNum; i++){
+                int colorNum = ((Long) dataSnapshot.child("color").getChildrenCount()).intValue();
+                for(int i=1; i<=colorNum; i++){
                     ColorData colorData = (ColorData)dataSnapshot.child("color").child(i+"").getValue(ColorData.class);
-                    colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
+                    colorMap[i] = colorData.getColor();
                     Log.d("firebase-color added", colorData.getColor() + "");
                 }
                 //인아쓰 이걸 어떻게 수정하면 될까유
