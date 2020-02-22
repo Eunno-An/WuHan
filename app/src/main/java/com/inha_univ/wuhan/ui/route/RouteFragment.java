@@ -81,7 +81,6 @@ public class RouteFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_route, contatiner,false);
         mapView = (MapView)root.findViewById(R.id.map);
 
-        finding_hospital = (Button)root.findViewById(R.id.finding_hospital);
         selecting_confirmators = (Button)root.findViewById(R.id.selecting_confirmator);
 
         //여기부터 디비 추가!!!!
@@ -173,9 +172,14 @@ public class RouteFragment extends Fragment
         final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(dialogView);
         //리사이클러 뷰 객체 참조
-
         final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
         Button b = (Button)getActivity().findViewById(R.id.selecting_confirmator);
+        View dialogView2 = getLayoutInflater().inflate(R.layout.dialog_popup2, null);
+        final BottomSheetDialog dialog2 = new BottomSheetDialog(getActivity());
+        dialog2.setContentView(dialogView2);
+        //진료소 팝업의 리사이클러뷰
+        final RecyclerView recyclerView2 = (RecyclerView)dialog2.findViewById(R.id.recycler2);
+
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -264,17 +268,13 @@ public class RouteFragment extends Fragment
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TextView 클릭될 시 할 코드작성
+
                 //다이얼로그를 띄우기 전, 리스트에 있는 내용을 다이얼로그 안의 리사이클려뷰로 갱신해주는 코드
 
                 myAdapter3 = new MyAdapter3(stringArrayList);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(dialog.getContext());
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(myAdapter3);
-
-                TextView dialogText = dialog.findViewById(R.id.dialogtext1);
-                //dialogText.setText(stringArrayList.get(5));
-
                 //다이얼로그를 띄우는 코드
                 dialog.show();
             }
@@ -295,8 +295,6 @@ public class RouteFragment extends Fragment
 
     public void addMarkersToMap(final GoogleMap googleMap){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
         //색 정보 받아오기
         //확진자 수
         DatabaseReference diagnosisRef = database.getReference();
@@ -310,9 +308,10 @@ public class RouteFragment extends Fragment
                 for(int i = 0; i < totalNum; i++){
                     stringArrayList.add("a");
                 }
-                for(int i=1; i<=totalNum; i++){
+                int colorNum = ((Long) dataSnapshot.child("color").getChildrenCount()).intValue();
+                for(int i=1; i<=colorNum; i++){
                     ColorData colorData = (ColorData)dataSnapshot.child("color").child(i+"").getValue(ColorData.class);
-                    colorMap[Integer.valueOf(colorData.getIdx())] = colorData.getColor();
+                    colorMap[i] = colorData.getColor();
                     Log.d("firebase-color added", colorData.getColor() + "");
                 }
                 //인아쓰 이걸 어떻게 수정하면 될까유
