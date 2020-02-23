@@ -17,7 +17,7 @@
         app:summary="확진자 경로가 업데이트 될 때마다 푸시알람을 받습니다"/>
 
     <SwitchPreferenceCompat
-        app:icon="@drawable/ic_setting_map"
+        app:icon="@drawable/ic_setting_fatality"
         app:defaultValue="false"
         app:key="@string/pref_key_dead"
         app:title="사망자 수 알림"
