@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     private long backKeyPressedTime = 0;
     private Toast toast;
 
-    private boolean check1, check2, first;
+    private boolean check1, check2, check3, first;
     private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +120,25 @@ public class MainActivity extends AppCompatActivity
                         }
                     });
                     check2 = true;
+                }
+            }).show();
+            new AlertDialog.Builder(MainActivity.this)
+                    .setCancelable(false)
+                    .setMessage("\"사망자 수 변화에 따른 푸시 알람에 동의하십니까?\"")
+                    .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            check3 = false;
+                            dialog.dismiss();
+                        }
+                    }).setPositiveButton("네", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "사망자 수 변화 푸시 알림에 동의하셨습니다.", Toast.LENGTH_SHORT).show();
+                    changePrefValue3();
+
+
+                    check3 = true;
                 }
             }).show();
             Log.e("test First", "true");
@@ -212,14 +231,20 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor edit = sharedPref.edit();
         edit.putBoolean(getString(R.string.pref_key_diagnose),true);
         edit.commit();
-        Log.e("changePrefValue","change to flase");
+        Log.e("changePrefValue","change to true");
     }
     public void changePrefValue2(){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor edit = sharedPref.edit();
         edit.putBoolean(getString(R.string.pref_key_route),true);
         edit.commit();
-        Log.e("changePrefValue","change to flase");
+        Log.e("changePrefValue","change to true");
     }
-
+    public void changePrefValue3(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor edit = sharedPref.edit();
+        edit.putBoolean(getString(R.string.pref_key_dead),true);
+        edit.commit();
+        Log.e("changePrefValue","change to true");
+    }
 }

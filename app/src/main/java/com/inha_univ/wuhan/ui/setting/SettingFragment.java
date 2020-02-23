@@ -26,7 +26,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
 
     private Activity mActivity;
     private Boolean check1, check2, first;
-    private SwitchPreferenceCompat diagnose_onoff, route_onoff;
+    private SwitchPreferenceCompat diagnose_onoff, route_onoff, dead_onoff;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -35,12 +35,33 @@ public class SettingFragment extends PreferenceFragmentCompat {
         mActivity = this.getActivity();
         diagnose_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_diagnose));
         route_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_route));
+        dead_onoff = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_key_dead));
 
 
 
 
         //main에서 보내준 bundle 값을 통해서
         //switchPreference 값 설정하기
+
+
+        dead_onoff.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {   // 확진자 수 관련 알림 변화 리스너
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if(dead_onoff.isChecked()) {  // 사망자 수 알림이 꺼지는 것 감지
+                    Toast.makeText(mActivity,"사망자 수 알림이 꺼졌습니다.", Toast.LENGTH_SHORT).show();
+                    dead_onoff.setChecked(false);
+
+
+
+                }else {  // 사망자 수 알림이 켜지는 것 감지
+                    Toast.makeText(mActivity,"사망자 수 알림이 켜졌습니다.",Toast.LENGTH_SHORT).show();
+                    dead_onoff.setChecked(true);
+
+
+                }
+                return false;
+            }
+        });
 
 
         diagnose_onoff.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {   // 확진자 수 관련 알림 변화 리스너
