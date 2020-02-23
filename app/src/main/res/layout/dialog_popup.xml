@@ -30,16 +30,15 @@
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@android:string/selectAll"
+            android:text="모두 선택"
             android:textColor="#000000"
             android:textColorHighlight="#00070000" />
-
         <Button
             android:id="@+id/deselect"
             android:layout_width="149dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="deselect all" />
+            android:text="모두 선택 해제" />
 
     </LinearLayout>
 

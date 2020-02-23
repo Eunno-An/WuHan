@@ -50,7 +50,7 @@ public class RouteFragment extends Fragment
     private MapView mapView = null;
 
     private int totalNum;   //총 확진자 수
-    private final int diagnosisCapacity = 100;
+    private final int diagnosisCapacity = 999999;
 
     //color 저장
     int colorMap[] = new int[diagnosisCapacity]; //몇번째 확진자인지를 index로
@@ -309,6 +309,7 @@ public class RouteFragment extends Fragment
                     stringArrayList.add("a");
                 }
                 int colorNum = ((Long) dataSnapshot.child("color").getChildrenCount()).intValue();
+                Log.d("colorNum", colorNum+"");
                 for(int i=1; i<=colorNum; i++){
                     ColorData colorData = (ColorData)dataSnapshot.child("color").child(i+"").getValue(ColorData.class);
                     colorMap[i] = colorData.getColor();
@@ -324,8 +325,9 @@ public class RouteFragment extends Fragment
                 }
 
                 Log.d("ming", "ming");
-                Log.d("firebase totalNum", totalNum + "");
-                for(int i=1; i<=totalNum; i++){
+                Log.d("firebase totalNum", colorNum + "");
+
+                for(int i=1; i<=colorNum; i++){
                     Log.e("onMapReady", "color");
                     MarkerOptions markerOptions = new MarkerOptions();
                     PolylineOptions polylineOptions;
