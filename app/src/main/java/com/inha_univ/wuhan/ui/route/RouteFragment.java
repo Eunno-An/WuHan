@@ -88,12 +88,14 @@ public class RouteFragment extends Fragment
             gpsData[i] = new ArrayList<>();
             pathList[i] = new ArrayList<>();
         }
-
+/*
         finding_hospital.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){//선별 진료소 선택 버튼
                 Log.e("finding_hospital", "button clicked");
             }
         });
+        
+ */
         selecting_confirmators.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){//확진자 선택 버튼
                 Log.e("selecting_confirm","button clicked");
