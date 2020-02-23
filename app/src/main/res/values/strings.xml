@@ -27,5 +27,6 @@
 
     <string name="pref_key_route">route_alarm</string>
     <string name="pref_key_diagnose">diagnose_alarm</string>
+    <string name="pref_key_dead">dead_alarm</string>
 
 </resources>
