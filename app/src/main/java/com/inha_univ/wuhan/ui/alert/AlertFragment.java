@@ -111,9 +111,7 @@ public class AlertFragment extends Fragment {
                 int outDiagNum = ((Long) dataSnapshot.getValue()).intValue();
                 outDiagTextView = (TextView)root.findViewById(R.id.outDiag_num);
                 outDiagTextView.setText(outDiagNum+"");
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value
