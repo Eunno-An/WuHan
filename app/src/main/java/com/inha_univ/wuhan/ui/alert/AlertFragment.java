@@ -37,7 +37,7 @@ public class AlertFragment extends Fragment {
 
     private TextView deathTextView; //사망자 수
     private TextView ingTextView; // 검사중 수
-    private TextView outTextView;  // 격리해제(결과음성) 수
+    //private TextView outTextView;  // 격리해제(결과음성) 수
     private TextView confirmTextView; // 확진자 수
     private TextView outDiagTextView;   //확진자 격리해제 수
 
@@ -85,11 +85,11 @@ public class AlertFragment extends Fragment {
                 deathTextView = (TextView)root.findViewById(R.id.death_num);
                 ingTextView = (TextView)root.findViewById(R.id.ing_num);
                 confirmTextView = (TextView)root.findViewById(R.id.confirm_num);
-                outTextView = (TextView)root.findViewById(R.id.out_num);
+                //outTextView = (TextView)root.findViewById(R.id.out_num);
 
                 deathTextView.setText(Integer.toString(patient.getFatality()));//getFatality는 int
                 ingTextView.setText(Integer.toString(patient.getIng()));
-                outTextView.setText(Integer.toString(patient.getOut()));
+                //outTextView.setText(Integer.toString(patient.getOut()));
                 confirmTextView.setText(Integer.toString(patient.getDiagnosis()));
 
             }
@@ -118,6 +118,7 @@ public class AlertFragment extends Fragment {
                 Log.w("firebase - 확진자수 읽기 에러", "Failed to read value.", error.toException());
             }
         });
+
         return root;
     }
 

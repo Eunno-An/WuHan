@@ -51,11 +51,36 @@ public class SettingFragment extends PreferenceFragmentCompat {
                     Toast.makeText(mActivity,"사망자 수 알림이 꺼졌습니다.", Toast.LENGTH_SHORT).show();
                     dead_onoff.setChecked(false);
 
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("fatality").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //String msg = getString(R.string.msg_subscribed);
+                            if (!task.isSuccessful()) {
+                                //msg = getString(R.string.msg_subscribe_failed);
+                                Log.d("push topic unsubscribe", "사망자 알림 해제 실패");
+                            }
+                            Log.d("push topic unsubscribe", "사망자 알림 해제");
+                            //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
 
                 }else {  // 사망자 수 알림이 켜지는 것 감지
                     Toast.makeText(mActivity,"사망자 수 알림이 켜졌습니다.",Toast.LENGTH_SHORT).show();
                     dead_onoff.setChecked(true);
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("fatality").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //String msg = getString(R.string.msg_subscribed);
+                            if (!task.isSuccessful()) {
+                                //msg = getString(R.string.msg_subscribe_failed);
+                                Log.d("push topic subscribe", "사망자 알림 구독 실패");
+                            }
+                            Log.d("push topic subscribe", "사망자 알림 구독");
+                            //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
 
                 }

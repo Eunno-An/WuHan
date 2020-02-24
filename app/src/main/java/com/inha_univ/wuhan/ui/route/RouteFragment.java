@@ -88,6 +88,21 @@ public class RouteFragment extends Fragment
             gpsData[i] = new ArrayList<>();
             pathList[i] = new ArrayList<>();
         }
+/*
+        finding_hospital.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){//선별 진료소 선택 버튼
+                Log.e("finding_hospital", "button clicked");
+            }
+        });
+        
+ */
+        selecting_confirmators.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){//확진자 선택 버튼
+                Log.e("selecting_confirm","button clicked");
+            }
+        });
+
+
 
         mapView = (MapView)root.findViewById(R.id.map);
         mapView.getMapAsync(this);
@@ -160,14 +175,12 @@ public class RouteFragment extends Fragment
         dialog.setContentView(dialogView);
         //리사이클러 뷰 객체 참조
         final RecyclerView recyclerView = (RecyclerView)dialog.findViewById(R.id.recycler2);
-
+        Button b = (Button)getActivity().findViewById(R.id.selecting_confirmator);
         View dialogView2 = getLayoutInflater().inflate(R.layout.dialog_popup2, null);
         final BottomSheetDialog dialog2 = new BottomSheetDialog(getActivity());
         dialog2.setContentView(dialogView2);
         //진료소 팝업의 리사이클러뷰
         final RecyclerView recyclerView2 = (RecyclerView)dialog2.findViewById(R.id.recycler2);
-
-
 
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -254,9 +267,7 @@ public class RouteFragment extends Fragment
 
             }
         });
-
-        Button btn_select_confirm = (Button)getActivity().findViewById(R.id.selecting_confirmator);
-        btn_select_confirm.setOnClickListener(new View.OnClickListener() {
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -270,8 +281,6 @@ public class RouteFragment extends Fragment
                 dialog.show();
             }
         });
-
-
         //메시지 띄우기
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override

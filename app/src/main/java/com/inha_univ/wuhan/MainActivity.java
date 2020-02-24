@@ -137,6 +137,18 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "사망자 수 변화 푸시 알림에 동의하셨습니다.", Toast.LENGTH_SHORT).show();
                     changePrefValue3();
 
+                    FirebaseMessaging.getInstance().subscribeToTopic("fatality").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //String msg = getString(R.string.msg_subscribed);
+                            if (!task.isSuccessful()) {
+                                //msg = getString(R.string.msg_subscribe_failed);
+                                Log.d("push topic subscribe", "사망자 알림 구독 실패");
+                            }
+                            Log.d("push topic subscribe", "사망자 알림 구독");
+                            //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                     check3 = true;
                 }
