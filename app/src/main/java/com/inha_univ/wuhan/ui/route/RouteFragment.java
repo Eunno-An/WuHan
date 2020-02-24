@@ -50,7 +50,7 @@ public class RouteFragment extends Fragment
     private MapView mapView = null;
 
     private int totalNum;   //총 확진자 수
-    private final int diagnosisCapacity = 999999999;
+    private final int diagnosisCapacity = 999999;
 
     //color 저장
     int colorMap[] = new int[diagnosisCapacity]; //몇번째 확진자인지를 index로
