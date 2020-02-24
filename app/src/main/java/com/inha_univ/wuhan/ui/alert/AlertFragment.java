@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,10 @@ public class AlertFragment extends Fragment {
     private TextView confirmTextView; // 확진자 수
     private TextView outDiagTextView;   //확진자 격리해제 수
 
+    private String color_stage_1 = "#4A90E2"; // Blue
+    private String color_stage_2 = "#F8E71C"; // Yellow
+    private String color_stage_3 = "#F5A632"; // Orange
+    private String color_stage_4 = "#D0021B"; // Red
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup contatiner, Bundle savedInstanceState){
         alertViewModel =
@@ -58,39 +63,40 @@ public class AlertFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                patient = dataSnapshot.getValue(Patient.class);
-                String level = patient.getLevel();
-                levelAnimationView = (LottieAnimationView) root.findViewById(R.id.animation_view);
-                alertTextView = (TextView)root.findViewById(R.id.main_text);
-                if(level.equals("관심")){
-                    levelAnimationView.setAnimation(R.raw.alert_blue);
-                    alertTextView.setText("관심");
-                    alertTextView.setTextColor(getResources().getColor(R.color.colorBlue));
-                }else if(level.equals("주의")){
-                    levelAnimationView.setAnimation(R.raw.alert_yellow);
-                    alertTextView.setText("주의");
-                    alertTextView.setTextColor(getResources().getColor(R.color.colorYellow));
-                }
-                else if(level.equals("경계")){
-                    levelAnimationView.setAnimation(R.raw.alert_orange);
-                    alertTextView.setText("경계");
-                    alertTextView.setTextColor(getResources().getColor(R.color.colorOrange));
-                }
-                else if(level.equals("심각")){
-                    levelAnimationView.setAnimation(R.raw.alert_red);
-                    alertTextView.setText("심각");
-                    alertTextView.setTextColor(getResources().getColor(R.color.colorRed));
-                }
+                if(getActivity() != null) {
+                    patient = dataSnapshot.getValue(Patient.class);
+                    String level = patient.getLevel();
+                    levelAnimationView = (LottieAnimationView) root.findViewById(R.id.animation_view);
+                    alertTextView = (TextView) root.findViewById(R.id.main_text);
 
-                deathTextView = (TextView)root.findViewById(R.id.death_num);
-                ingTextView = (TextView)root.findViewById(R.id.ing_num);
-                confirmTextView = (TextView)root.findViewById(R.id.confirm_num);
-                //outTextView = (TextView)root.findViewById(R.id.out_num);
+                    if (level.equals("관심")) {
+                        levelAnimationView.setAnimation(R.raw.alert_blue);
+                        alertTextView.setText("관심");
+                        alertTextView.setTextColor(Color.parseColor(color_stage_1));
+                    } else if (level.equals("주의")) {
+                        levelAnimationView.setAnimation(R.raw.alert_yellow);
+                        alertTextView.setText("주의");
+                        alertTextView.setTextColor(Color.parseColor(color_stage_2));
+                    } else if (level.equals("경계")) {
+                        levelAnimationView.setAnimation(R.raw.alert_orange);
+                        alertTextView.setText("경계");
+                        alertTextView.setTextColor(Color.parseColor(color_stage_3));
+                    } else if (level.equals("심각")) {
+                        levelAnimationView.setAnimation(R.raw.alert_red);
+                        alertTextView.setText("심각");
+                        alertTextView.setTextColor(Color.parseColor(color_stage_4));
+                    }
 
-                deathTextView.setText(Integer.toString(patient.getFatality()));//getFatality는 int
-                ingTextView.setText(Integer.toString(patient.getIng()));
-                //outTextView.setText(Integer.toString(patient.getOut()));
-                confirmTextView.setText(Integer.toString(patient.getDiagnosis()));
+                    deathTextView = (TextView) root.findViewById(R.id.death_num);
+                    ingTextView = (TextView) root.findViewById(R.id.ing_num);
+                    confirmTextView = (TextView) root.findViewById(R.id.confirm_num);
+                    //outTextView = (TextView)root.findViewById(R.id.out_num);
+
+                    deathTextView.setText(Integer.toString(patient.getFatality()));//getFatality는 int
+                    ingTextView.setText(Integer.toString(patient.getIng()));
+                    //outTextView.setText(Integer.toString(patient.getOut()));
+                    confirmTextView.setText(Integer.toString(patient.getDiagnosis()));
+                }
 
             }
 
