@@ -11,3 +11,16 @@ main에서 애니메이션 넣을 때
 https://icons8.com/icons/set/flu
 png image good
 
+
+alarm/sub/sendNotification.js :
+when i changes the firebase db-fatality and db-diagnosis send the notification to users 
+
+alarm/sub/kor_ona_example.py :
+when the govermentweb info was changed, the kor_ona_example.py do crawl the info and change firebase db automatically
+so when the govermentweb info was changed, the alarm is sent to the user.
+
+alarm/sub/main.py :
+This is a daemon file that lets the file return to the background on the server.
+
+alarm/sub/example-firebase.json :
+this is the key to login our firebase
