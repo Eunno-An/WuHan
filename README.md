@@ -12,8 +12,11 @@ https://icons8.com/icons/set/flu
 png image good
 
 
+
 alarm/sub/index.js :
 when i changes the firebase db-fatality and db-diagnosis send the notification to users 
+to notificate we have to deploy the index.js at nodejs
+To connect nodejs and firebase, firebase provides a method.
 
 alarm/sub/kor_ona_example.py :
 when the govermentweb info was changed, the kor_ona_example.py do crawl the info and change firebase db automatically
